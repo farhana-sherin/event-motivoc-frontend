@@ -1,40 +1,45 @@
-import {
-  createBrowserRouter,
-
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { UserLayout } from "../userLayout/UserLayout";
 import ErrorPage from "../Errorpage ";
 import { Home } from "../pages/Home";
-import { EventDetails } from "../pages/EventDetails";
-import BuyTicket from "../pages/BuyTicket";
-import { Payment } from "../pages/Payment";
 
+import Login from "../pages/Login";
+import BookingPage from "../pages/BookingPage";
+import BookingDetailsPage from "../pages/BookingDetail";
+import PaymentSuccess from "../component/PaymentSuccess";
+import EventDetail from "../pages/EventDetail";
 
 export const router = createBrowserRouter([
   {
     path: "/",    
-    element: <UserLayout/>,
-    errorElement: <ErrorPage/>,
+    element: <UserLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
+        path: "/login",
+        element: <Login />
+      },
+      {
         path: "/",
-        element:<Home/>,
+        element: <Home />,
       },
       {
-        path: "/events/:id",
-        element: <EventDetails/>,
+        path: "/bookings/new",
+        element: <BookingPage />,
       },
       {
-        path:"/buy-ticket/:id",
-        element:<BuyTicket/>
+        path: "/booking/:bookingId", // ✅ Add this route
+        element: <BookingDetailsPage />
       },
       {
-        path:"/payment/:id",
-        element:<Payment/>
-      }
+        path: "/payment/success",
+        element: <PaymentSuccess />
+      },
+      {
+        path:"/event/detail/:id",
+        element:<EventDetail/>
+
+      },
     ]
-   
-  },
-  
-  
+  }
 ]);

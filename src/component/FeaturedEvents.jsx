@@ -13,16 +13,15 @@ export const FeaturedEvents = () => {
         const items = Array.isArray(payload?.data)
           ? payload.data
           : Array.isArray(payload?.results)
-            ? payload.results
-            : Array.isArray(payload)
-              ? payload
-              : [];
+          ? payload.results
+          : Array.isArray(payload)
+          ? payload
+          : [];
         setFeaturedEvents(items);
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchFeatured();
   }, []);
 
@@ -31,57 +30,60 @@ export const FeaturedEvents = () => {
       <div className="w-[95%] max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-purple-600 text-white text-xs font-bold mb-5 shadow">
-            <span>FEATURED EVENTS</span>
+          <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold mb-5 shadow-md">
+            FEATURED EVENTS
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900">
             Discover Amazing Events
           </h2>
         </div>
 
-        {/* Grid of cards */}
+        {/* Grid of ticket-style cards */}
         {featuredEvents.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {featuredEvents.map((event) => (
-              <article key={event.id}>
-                <Link
-                  to={`/events/${event.id || event._id || event.slug || ""}`}
-                  className="block rounded-2xl overflow-hidden shadow-sm bg-white hover:shadow-md transition-shadow"
-                >
-                  <div className="relative h-56 md:h-64 lg:h-64">
-                    <img
-                      src={event.images}
-                      alt={event.title || "Event image"}
-                      className="h-full w-full object-cover"
-                    />
-                    {/* Price badge */}
-                    <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white shadow">
-                      {event.price ? `${event.price}` : "Free"}
-                    </div>
+              <Link
+                key={event.id}
+                to={`/event/detail/${event.id}`}
+                className="relative block group rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 bg-white"
+              >
+                {/* Image */}
+                <div className="relative h-64 w-full overflow-hidden">
+                  <img
+                    src={event.images}
+                    alt={event.title || "Event image"}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+
+                  {/* Price ribbon */}
+                  <div className="absolute top-4 left-0 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-1 font-bold text-sm transform -rotate-12 shadow-lg">
+                    {event.price ? `₹${event.price}` : "Free"}
                   </div>
 
-                  <div className="px-5 md:px-6 py-5">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="px-3 py-1 rounded-full text-[11px] font-semibold bg-purple-100 text-purple-700">
-                        {event.category || "CONFERENCE"}
-                      </span>
-                      <span className="text-xs font-semibold text-gray-900 bg-gray-100 px-2.5 py-1 rounded-full">
-                        {event.start_date || "TBA"}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl md:text-2xl font-extrabold text-gray-900 mb-2 leading-snug line-clamp-2">
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4">
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                       {event.title}
                     </h3>
-
-                    <div className="mt-3 flex items-center gap-2 text-gray-500">
-                      <span className="text-sm">
-                        📍 {event.location || event.venue || "Location TBA"}
-                      </span>
-                    </div>
+                    <p className="text-sm text-gray-200 mb-2 line-clamp-3">
+                      {event.description || "No description available."}
+                    </p>
+                    <span className="inline-block px-3 py-1 bg-indigo-600 text-white font-semibold rounded-full shadow">
+                      {event.category || "CONFERENCE"}
+                    </span>
                   </div>
-                </Link>
-              </article>
+                </div>
+
+                {/* Info below image */}
+                <div className="px-6 py-4 flex justify-between items-center bg-white">
+                  <span className="text-gray-700 font-semibold">
+                    {event.start_date || "Date TBA"}
+                  </span>
+                  <button className="px-4 py-2 bg-indigo-600 text-white font-bold rounded-xl shadow hover:bg-indigo-700 transition-colors">
+                    View Details
+                  </button>
+                </div>
+              </Link>
             ))}
           </div>
         ) : (
