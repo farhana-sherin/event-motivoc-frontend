@@ -10,6 +10,8 @@ import PaymentSuccess from "../component/PaymentSuccess";
 import EventDetail from "../pages/EventDetail";
 import SearchEventsPage from "../component/SeerchEventPage";
 import EventListPage from "../pages/EventListPage";
+import ViewAllBooking from "../pages/ViewAllBooking";
+import Notifications from "../component/Notification";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,16 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "view/all/booking",
+        element: <ViewAllBooking/>,
+
+      },
+      {
+        path: "/notification",
+        element: <Notifications />,
+
       },
       {
         path: "/bookings/new",

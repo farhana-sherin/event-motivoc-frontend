@@ -3,16 +3,17 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../config/axiosinstance";
 
 const BookingDetailsPage = () => {
-  const { bookingId } = useParams(); // Ensure route uses :bookingId
+  const { bookingId } = useParams();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cancelling, setCancelling] = useState(false);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchBooking = async () => {
       try {
         const response = await axiosInstance.get(
-          `/customer/bookings/detail/${bookingId}/`,
+          `customer/booking/detail/${bookingId}/`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setBooking(response.data.data);
@@ -25,22 +26,29 @@ const BookingDetailsPage = () => {
     fetchBooking();
   }, [bookingId, token]);
 
-  const handlePayment = async () => {
+  const handleCancelBooking = async () => {
+    if (!window.confirm("Are you sure you want to cancel this booking?")) return;
+  
+    setCancelling(true);
     try {
       const response = await axiosInstance.post(
-        `/payment/payments/create-checkout-session/${bookingId}/`,
-        {},
+        `customer/booking/cancel/${bookingId}/`,
+        { refund_amount: booking.amount_paid },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      if (response.data?.url) {
-        window.location.href = response.data.url; // Redirect to Stripe
-      } else {
-        alert("Stripe session URL not received.");
-      }
+      alert(response.data.message);
+  
+      // Update booking with refunded amount
+      setBooking(prev => ({
+        ...prev,
+        payment_status: "REFUNDED",
+        refund_amount: response.data.refund_amount
+      }));
     } catch (err) {
-      console.error("Payment failed:", err.response ? err.response.data : err);
-      alert("Payment failed. Please try again.");
+      console.error("Error cancelling booking:", err);
+      alert(err.response?.data?.error || "Failed to cancel booking");
+    } finally {
+      setCancelling(false);
     }
   };
 
@@ -51,19 +59,23 @@ const BookingDetailsPage = () => {
     <section className="w-full min-h-screen flex items-center justify-center bg-gray-50 py-16">
       <div className="w-[95%] max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Booking Details</h1>
-        <p><strong>Event:</strong> {booking.event}</p>
-        <p><strong>Tickets:</strong> {booking.tickets}</p>
+        
+        <p><strong>Event:</strong> {booking.event.title}</p>
+        <p><strong>Tickets:</strong> {booking.tickets_count}</p>
         <p><strong>Booking Date:</strong> {booking.booking_date}</p>
-        <p><strong>Total Price:</strong> ₹{booking.total_price}</p>
+        <p><strong>Total Price:</strong> ₹{booking.event.price * booking.tickets_count}</p>
+        <p><strong>Amount Paid:</strong> ₹{booking.amount_paid}</p>
         <p><strong>Status:</strong> {booking.payment_status}</p>
+        <p><strong>QR Code Text:</strong> {booking.qr_code_text}</p>
 
-        {booking.payment_status === "PENDING" && (
+        {/* Cancel Button */}
+        {booking.payment_status === "SUCCESS" && (
           <button
-            onClick={handlePayment}
-            className="mt-6 w-full px-6 py-4 rounded-2xl text-white font-bold text-lg tracking-wide 
-            bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg"
+            onClick={handleCancelBooking}
+            disabled={cancelling}
+            className="mt-6 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
           >
-            Proceed to Payment
+            {cancelling ? "Cancelling..." : "Cancel Booking"}
           </button>
         )}
       </div>

@@ -79,6 +79,10 @@ export const Header = () => {
                 <Link to="/about"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">About</li></Link>
                 <Link to="/contact"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">Contact</li></Link>
                 <Link to="/event/list"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">Events</li></Link>
+                <Link to="/view/all/booking"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">my_bookings</li></Link>
+                <Link to="/notification"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">Not</li></Link>
+
+
               </ul>
             </div>
 
