@@ -128,6 +128,7 @@ const EventListPage = () => {
                     {/* Heart icon */}
                     <button
                       onClick={() => toggleWishlist(event.id)}
+                      
                       className="absolute top-4 right-4 p-2 rounded-full transition-colors bg-white"
                     >
                       {isWishlisted ? (
