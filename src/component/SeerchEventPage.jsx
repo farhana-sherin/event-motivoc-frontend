@@ -15,6 +15,7 @@ const SearchEventsPage = () => {
           { category: category }
         );
         setEvents(response.data.data || []);
+        
       } catch (error) {
         console.error("Error fetching events", error);
       } finally {
