@@ -8,6 +8,8 @@ import BookingPage from "../pages/BookingPage";
 import BookingDetailsPage from "../pages/BookingDetail";
 import PaymentSuccess from "../component/PaymentSuccess";
 import EventDetail from "../pages/EventDetail";
+import SearchEventsPage from "../component/SeerchEventPage";
+import EventListPage from "../pages/EventListPage";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,12 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+
+        path: "/event/list",
+        element: <EventListPage/>
+
       },
       {
         path: "/",
@@ -39,6 +47,10 @@ export const router = createBrowserRouter([
         path:"/event/detail/:id",
         element:<EventDetail/>
 
+      },
+      {
+        path: "/search/:category",
+        element: <SearchEventsPage/>,
       },
     ]
   }
