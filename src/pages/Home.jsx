@@ -10,6 +10,7 @@ import { axiosInstance } from '../config/axiosinstance';
 import HowItWorks from '../component/HowItWorks';
 import UpcomingEvents from '../component/UpcomingEvents';
 import FeaturedEvents from '../component/FeaturedEvents';
+import BecomeOrganizerSection from '../component/BecomeOrganizerSection';
 
 export const Home = () => { 
     const [banner,setBanner]=useState([]);
@@ -77,6 +78,7 @@ export const Home = () => {
       <HowItWorks/>
       <UpcomingEvents/>
       <FeaturedEvents/>
+      <BecomeOrganizerSection/>
       
     </div>
   );

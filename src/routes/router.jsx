@@ -12,6 +12,13 @@ import SearchEventsPage from "../component/SeerchEventPage";
 import EventListPage from "../pages/EventListPage";
 import ViewAllBooking from "../pages/ViewAllBooking";
 import Notifications from "../component/Notification";
+import BecomeOrganizerPage from "../pages/BecomeOrganizerPage";
+import OrganizerDashboard from "../pages/OrganizerDashboard";
+import OrganizerEvents from "../component/OrganizerEventList";
+import OrganizerEventList from "../component/OrganizerEventList";
+import OrganizerEventDetails from "../component/OrganizerEventDetails";
+import OrganizerBooked from "../component/OrganizerBooked";
+import EventCreation from "../pages/EventCreation";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +71,30 @@ export const router = createBrowserRouter([
         path: "/search/:category",
         element: <SearchEventsPage/>,
       },
+      {
+        path: "/become-organizer",
+        element: <BecomeOrganizerPage />,
+      },
+      {
+        path:"/dashboard",
+        element:<OrganizerDashboard/>
+
+      },
+      {
+        path:"/OrganizerEventList",
+        element:<OrganizerEventList />
+
+      },{
+        path: "/OrganizerEventDetail/:id",
+        element: <OrganizerEventDetails />
+      },{
+        path: "/Organizerbooking/details/:id",
+        element: <OrganizerBooked />
+
+      },{
+         path: "event/create/",
+         element:<EventCreation />
+      }
     ]
   }
 ]);
