@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../config/axiosinstance";
 
 const ViewAllBooking = () => {
-  const [bookings, setBookings] = useState([]);
+  const [latestBookings, setLatestBookings] = useState([]);
+  const [pastBookings, setPastBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("latest"); // latest or past
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -13,9 +16,11 @@ const ViewAllBooking = () => {
         const res = await axiosInstance.get("customer/view/all/booking", {
           headers: { Authorization: `Bearer ${token}` },
         });
+
         console.log("Bookings API response:", res.data);
-        
-        setBookings(res.data.data || []);
+
+        setLatestBookings(res.data.data.latest_bookings || []);
+        setPastBookings(res.data.data.past_bookings || []);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       } finally {
@@ -36,6 +41,8 @@ const ViewAllBooking = () => {
     );
   }
 
+  const bookingsToShow = activeTab === "latest" ? latestBookings : pastBookings;
+
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-6">
       <div className="max-w-6xl mx-auto">
@@ -46,21 +53,51 @@ const ViewAllBooking = () => {
           </span>
         </h2>
 
-        {bookings.length === 0 ? (
+        {/* Tabs */}
+        <div className="flex justify-center gap-4 mb-8">
+          <button
+            onClick={() => setActiveTab("latest")}
+            className={`px-6 py-2 rounded-full font-medium ${
+              activeTab === "latest"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            Latest
+          </button>
+          <button
+            onClick={() => setActiveTab("past")}
+            className={`px-6 py-2 rounded-full font-medium ${
+              activeTab === "past"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            Past
+          </button>
+        </div>
+
+        {bookingsToShow.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 shadow-sm">
-            <p className="text-gray-600 text-lg">You have no bookings yet.</p>
-            <Link
-              to="/events"
-              className="mt-4 inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:opacity-90"
-            >
-              Browse Events
-            </Link>
+            <p className="text-gray-600 text-lg">
+              {activeTab === "latest"
+                ? "No upcoming bookings yet."
+                : "No past bookings."}
+            </p>
+            {activeTab === "latest" && (
+              <Link
+                to="/events"
+                className="mt-4 inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow hover:opacity-90"
+              >
+                Browse Events
+              </Link>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {bookings.map((booking) => {
+            {bookingsToShow.map((booking) => {
               const event = booking.event;
-              const startDate = new Date(booking.booking_date);
+              const startDate = new Date(event.start_date);
 
               return (
                 <div
@@ -92,15 +129,24 @@ const ViewAllBooking = () => {
                       🎟️ Tickets: {booking.tickets_count}
                     </p>
 
-                   
-
                     <div className="flex items-center justify-between">
                       <Link
                         to={`/booking/${booking.id}`}
                         className="text-blue-600 font-medium hover:underline"
                       >
-                        View Details →
+                        View Booking →
                       </Link>
+
+                      {activeTab === "past" && booking.can_review && (
+                        <button
+                          onClick={() =>
+                            navigate(`/event/${event.id}/reviews`)
+                          }
+                          className="px-4 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition"
+                        >
+                          Review
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

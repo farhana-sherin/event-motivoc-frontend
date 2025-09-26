@@ -71,20 +71,31 @@ const OrganizerEventDetails = () => {
           <p className="text-gray-400 mb-1">Location: {event.location}</p>
           <p className="text-gray-400 mb-1">Price: ₹{event.price}</p>
 
-          {/* Tickets & QR Code */}
-          <p className="text-gray-400 mb-1">Tickets: {event.ticket_count}</p>
-          <p className="text-gray-400 mb-4">QR Code: {event.qr_code_text}</p>
+          {/* Tickets */}
+          <p className="text-gray-400 mb-4">Tickets: {event.ticket_count}</p>
+
+          {/* QR Code Image & Text */}
+          {event.qr_code_image && (
+            <div className="bg-[#1a1f4a] p-4 rounded mb-4 text-center">
+              <h4 className="text-white font-semibold mb-2">Event QR Code</h4>
+              <a href={event.qr_code_image} download={`${event.title}-QR.png`}>
+                <img
+                  src={event.qr_code_image}
+                  alt={`QR Code for ${event.title}`}
+                  className="mx-auto w-48 h-48 mb-2"
+                />
+              </a>
+              <p className="text-gray-300 break-all">{event.qr_code_text}</p>
+              <p className="text-gray-400 text-sm mt-1">
+                Scan or share this QR code with your customers
+              </p>
+            </div>
+          )}
 
           {/* Buttons */}
           <div className="flex gap-4 mt-4">
             <Link
-              to={`/organizer/event/edit/${event.id}`}
-              className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded hover:from-indigo-700 hover:to-purple-700 transition"
-            >
-              Edit Event
-            </Link>
-            <Link
-              to="/organizer/events"
+              to="/OrganizerEventList"
               className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition"
             >
               Back to My Events

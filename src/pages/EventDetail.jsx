@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { axiosInstance } from "../config/axiosinstance";
@@ -70,7 +71,7 @@ export const EventDetail = () => {
             <div className="flex items-center gap-4 mb-6">
               <span className="text-lg font-semibold">Price:</span>
               <span className="min-w-[80px] text-center text-lg font-semibold bg-gray-100 rounded-full px-4 py-1 shadow-inner">
-                {event.price || "Free"}
+              ₹ {event.price || "Free"}
               </span>
             </div>
               

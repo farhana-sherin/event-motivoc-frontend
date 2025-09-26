@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { axiosInstance } from "../config/axiosinstance";
 
 const OrganizerBooked = () => {
@@ -35,7 +35,7 @@ const OrganizerBooked = () => {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center h-screen text-white">
+      <div className="flex items-center justify-center h-screen text-gray-600">
         Loading booking...
       </div>
     );
@@ -47,43 +47,66 @@ const OrganizerBooked = () => {
     );
   if (!booking)
     return (
-      <div className="flex items-center justify-center h-screen text-white">
+      <div className="flex items-center justify-center h-screen text-gray-600">
         No booking found
       </div>
     );
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#0c1030]  px-4">
-      <div className="w-full max-w-3xl p-8 bg-gray-900 rounded-xl shadow-xl text-white">
-        <h2 className="text-4xl font-bold mb-6 text-center">{booking.event_title}</h2>
-        <div className="space-y-4 text-lg">
-          <p>
-            <span className="font-semibold">Customer:</span> {booking.customer_name || "N/A"} ({booking.customer_email})
+    <div className="min-h-screen bg-gray-100 py-10 px-4">
+      <div className="w-full max-w-3xl mx-auto bg-white rounded-xl shadow-lg border">
+        {/* Header */}
+        <div className="px-6 py-5 border-b bg-indigo-50 rounded-t-xl">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {booking.event_title}
+          </h2>
+          <p className="text-sm text-gray-500">
+            Booking ID: {booking.booking_id}
           </p>
-          <p>
-            <span className="font-semibold">Tickets:</span> {booking.tickets_count}
+        </div>
+
+        {/* Details */}
+        <div className="px-6 py-6 space-y-4">
+          <p className="text-gray-700">
+            <span className="font-semibold">👤 Customer:</span>{" "}
+            {booking.customer_name || "N/A"} ({booking.customer_email})
           </p>
-          <p>
-            <span className="font-semibold">Booking Date:</span>{" "}
+          <p className="text-gray-700">
+            <span className="font-semibold">🎟 Tickets:</span>{" "}
+            {booking.tickets_count}
+          </p>
+          <p className="text-gray-700">
+            <span className="font-semibold">📅 Booking Date:</span>{" "}
             {new Date(booking.booking_date).toLocaleString()}
           </p>
-          <p>
-            <span className="font-semibold">Payment Status:</span>{" "}
+          <p className="text-gray-700">
+            <span className="font-semibold">💰 Amount Paid:</span> ₹
+            {booking.amount_paid}
+          </p>
+          <p className="text-gray-700">
+            <span className="font-semibold">✅ Payment Status:</span>{" "}
             <span
-              className={
+              className={`px-2 py-1 rounded-full text-xs font-semibold ${
                 booking.payment_status === "SUCCESS"
-                  ? "text-green-400"
+                  ? "bg-green-100 text-green-700"
                   : booking.payment_status === "REFUNDED"
-                  ? "text-yellow-400"
-                  : "text-red-400"
-              }
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-red-100 text-red-700"
+              }`}
             >
               {booking.payment_status}
             </span>
           </p>
-          <p>
-            <span className="font-semibold">Amount Paid:</span> ₹{booking.amount_paid}
-          </p>
+        </div>
+
+        {/* Footer */}
+        <div className="px-6 py-4 border-t bg-gray-50 flex justify-end">
+          <Link
+            to="/organizer/bookings"
+            className="px-4 py-2 rounded-lg bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
+          >
+            Back to Bookings
+          </Link>
         </div>
       </div>
     </div>

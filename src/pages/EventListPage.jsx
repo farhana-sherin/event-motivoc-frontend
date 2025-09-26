@@ -13,7 +13,7 @@ const EventListPage = () => {
   const [sortOption, setSortOption] = useState("date_asc");
   const [loading, setLoading] = useState(true);
 
-  const { wishlist, toggleWishlist } = useWishlist(); // use context
+  const { wishlist, toggleWishlist } = useWishlist();
 
   // Fetch events
   useEffect(() => {
@@ -28,7 +28,6 @@ const EventListPage = () => {
         setEvents(data);
         setFilteredEvents(data);
 
-        // Unique categories
         const uniqueCats = ["All", ...new Set(data.map((e) => e.category))];
         setCategories(uniqueCats);
       } catch (error) {
@@ -118,17 +117,16 @@ const EventListPage = () => {
                 >
                   <div className="relative">
                     <Link to={`/event/detail/${event.id}`}>
-                      <img
-                        src={event.images}
-                        alt={event.title}
-                        className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                    <img
+  src={event.images ? event.images : "/placeholder_event.jpg"}
+  alt={event.title}
+  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+/>
                     </Link>
 
                     {/* Heart icon */}
                     <button
                       onClick={() => toggleWishlist(event.id)}
-                      
                       className="absolute top-4 right-4 p-2 rounded-full transition-colors bg-white"
                     >
                       {isWishlisted ? (

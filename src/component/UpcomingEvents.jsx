@@ -112,11 +112,14 @@ const UpcomingEvents = () => {
                   </div>
 
                   <div className="mt-5">
-                    <Link to={`/bookings/new?event=${event.id}`}>
-                      <button className="w-full px-4 py-2.5 rounded-2xl text-sm font-semibold text-white shadow-sm bg-gradient-to-r from-gray-900 to-gray-800 hover:from-black hover:to-gray-900 transition-colors">
-                        Buy Ticket
-                      </button>
-                    </Link>
+                 
+                <Link to={`/event/detail/${event.id}`}>
+                  <button className="w-full px-4 py-2.5 rounded-2xl text-sm font-semibold text-white shadow-sm bg-gradient-to-r from-gray-900 to-gray-800 hover:from-black hover:to-gray-900 transition-colors">
+                    View Details
+                  </button>
+                </Link>
+
+
                   </div>
                 </div>
               </div>

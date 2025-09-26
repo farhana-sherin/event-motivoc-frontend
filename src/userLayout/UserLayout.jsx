@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header } from '../component/Header'
+import Header from '../component/Header'  
 import { OrganizerHeader } from '../component/OrganizerHeader'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Footer } from '../component/Footer'
@@ -15,6 +15,15 @@ export const UserLayout = () => {
     '/OrganizerEventDetail',
     '/Organizerbooking/details',
     '/event/create',
+    '/organizer/bookings',
+    '/cancelled/booking',
+    '/organizer/analytics',
+    '/admin/approved/events',
+    '/event/create',
+    '/event/update/',
+    '/organizer/events',
+    '/organizer/rating',
+    '/organizer/notification'
   ].some(path => location.pathname.startsWith(path));
 
   return (
@@ -23,7 +32,8 @@ export const UserLayout = () => {
       <main className='flex-1'>
         <Outlet />
       </main>
-      <Footer />
+      {/* Don't show footer on organizer pages as they have their own layout */}
+      {!isOrganizerPage && <Footer />}
     </div>
   )
 }

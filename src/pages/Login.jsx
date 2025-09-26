@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../config/axiosinstance";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
-   let navigate = useNavigate()
+  let navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -14,13 +14,13 @@ export default function Login() {
     console.log("Form Data:", data);
     try {
       const response = await axiosInstance.post("customer/login/", data);
-      
+
       console.log(response.data.data.access);
-      let token = response.data.data.access
-      localStorage.setItem("token", token)
-      navigate("/")
+      let token = response.data.data.access;
+      localStorage.setItem("token", token);
+      navigate("/");
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
 
@@ -70,6 +70,17 @@ export default function Login() {
         >
           Login
         </button>
+
+        {/* Register Link */}
+        <p className="text-center text-gray-500 mt-4">
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="text-blue-600 hover:text-blue-800 font-semibold"
+          >
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );

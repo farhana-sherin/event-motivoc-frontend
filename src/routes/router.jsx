@@ -11,14 +11,29 @@ import EventDetail from "../pages/EventDetail";
 import SearchEventsPage from "../component/SeerchEventPage";
 import EventListPage from "../pages/EventListPage";
 import ViewAllBooking from "../pages/ViewAllBooking";
-import Notifications from "../component/Notification";
+
 import BecomeOrganizerPage from "../pages/BecomeOrganizerPage";
 import OrganizerDashboard from "../pages/OrganizerDashboard";
-import OrganizerEvents from "../component/OrganizerEventList";
+import OrganizerEvents from "../component/organizerevents";
 import OrganizerEventList from "../component/OrganizerEventList";
 import OrganizerEventDetails from "../component/OrganizerEventDetails";
 import OrganizerBooked from "../component/OrganizerBooked";
-import EventCreation from "../pages/EventCreation";
+
+import CancelledBookings from "../component/CancelledBookings";
+import AllBookings from "../component/AllBooking";
+import OrganizerAnalytics from "../component/OrganizerAnalytics";
+import AdminApprovedEvents from "../component/AdminapprovedEvent";
+import CreateEvent from "../component/createEvent";
+import UpdateEvent from "../component/UpdateEvent";
+import OrganizerNotifications from "../component/OrganizerNotification";
+import CustomerNotifications from "../component/CustomerNotification";
+import CreateSupportTicket from "../component/CreateSupportTicket";
+import EventReviewPage from "../component/EventReviewpage";
+import OrganizerEventRatings from "../component/OrganizerRating";
+import Register from "../pages/RegisterForm";
+import ProfilePage from "../component/customerprofile";
+
+
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +44,11 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+        path: "/register",
+        element: <Register />
+
       },
       {
 
@@ -45,11 +65,7 @@ export const router = createBrowserRouter([
         element: <ViewAllBooking/>,
 
       },
-      {
-        path: "/notification",
-        element: <Notifications />,
-
-      },
+      
       {
         path: "/bookings/new",
         element: <BookingPage />,
@@ -84,6 +100,11 @@ export const router = createBrowserRouter([
         path:"/OrganizerEventList",
         element:<OrganizerEventList />
 
+      },
+      {
+        path:"/organizer/events",
+        element:<OrganizerEvents />
+
       },{
         path: "/OrganizerEventDetail/:id",
         element: <OrganizerEventDetails />
@@ -91,10 +112,68 @@ export const router = createBrowserRouter([
         path: "/Organizerbooking/details/:id",
         element: <OrganizerBooked />
 
+      },
+      {
+        path: "/event/create",
+        element: <CreateEvent/>
+
+
+      },
+      {
+        path: "/event/update/:id",
+        element: <UpdateEvent />
+
+
+      },
+
+      {
+
+        path:"cancelled/booking",
+        element:<CancelledBookings />
+      },
+      {
+        path:"/organizer/bookings" ,
+        element:<AllBookings />
+
       },{
-         path: "event/create/",
-         element:<EventCreation />
+        path:"/organizer/analytics",
+        element:<OrganizerAnalytics />
+
+      },
+      {
+        path:"/admin/approved/events",
+        element:<AdminApprovedEvents/>
+
+      },{
+
+        path:"/organizer/notification",
+        element:<OrganizerNotifications />
+
+      },
+      {
+        path: "/my/notification",
+        element: <CustomerNotifications />
+      },
+      {
+        path: "/support-ticket/create",
+        element: <CreateSupportTicket />
+      },
+      {
+        path: "/event/:id/reviews",
+        element: <EventReviewPage />
+      },
+      {
+        path: "/organizer/rating",
+        element: <OrganizerEventRatings />
+
+      },{
+
+        path: "/profile/:id",
+        element: <ProfilePage/>
+
       }
+      
+      
     ]
   }
 ]);

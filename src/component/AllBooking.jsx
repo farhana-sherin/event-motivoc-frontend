@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../config/axiosinstance";
+import { Link } from "react-router-dom";
+import OrganizerLayout from "./OrganizerLayout";
 
-const OrganizerBooking = () => {
+const AllBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,6 +45,7 @@ const OrganizerBooking = () => {
   const currentBookings = bookings.slice(startIndex, startIndex + bookingsPerPage);
 
   return (
+    <OrganizerLayout>
     <div className="w-[95%] max-w-7xl mx-auto py-10">
       <h2 className="text-3xl font-bold mb-6 text-gray-700">Bookings</h2>
 
@@ -171,7 +174,8 @@ const OrganizerBooking = () => {
         </div>
       )}
     </div>
+    </OrganizerLayout>
   );
-};
+};  
 
-export default OrganizerBooking;
+export default AllBookings;

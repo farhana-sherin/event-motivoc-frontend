@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export const Header = () => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
 
   const isHome = location.pathname === "/";
-  const darkMode = !isHome || isScrolled;
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 10);
@@ -19,7 +21,7 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [location.pathname]);
 
-  const categories = ["Music", "Tech", "Sports", "Arts", "Culinary", "Business","other"];
+  const categories = ["Music", "Tech", "Sports", "Arts", "Culinary", "Business", "Other"];
   const filtered = categories.filter((cat) =>
     cat.toLowerCase().includes(search.toLowerCase())
   );
@@ -34,7 +36,6 @@ export const Header = () => {
     setShowSuggestions(false);
   };
 
-  // ✅ navigate to search page dynamically
   const handleSubmitSearch = () => {
     if (search.trim()) {
       navigate(`/search/${search.toLowerCase()}`);
@@ -42,185 +43,134 @@ export const Header = () => {
     }
   };
 
+ 
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.user_id;
+    } catch (err) {
+      console.error("Invalid token", err);
+      return null;
+    }
+  };
+
+  const userId = getUserIdFromToken();
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        "/customer/logout/",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (err) {
+      console.error("Logout failed:", err);
+    } finally {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  };
+
   return (
-    <div>
-      <section className="sticky top-0 z-50 relative pt-2">
-        <div className="w-[95%] mx-auto">
-          {/* Navbar */}
-          <section
-            className={`flex flex-wrap justify-between items-center px-4 md:px-8 py-3 h-[60px] w-full rounded-3xl transition-colors duration-300 ${
-              darkMode || isOpen
-                ? "bg-[#0c1030]/95 border border-indigo-900/40 backdrop-blur-md shadow-lg"
-                : "bg-white/15 border border-white/30 backdrop-blur-md shadow-lg"
-            }`}
-          >
-            {/* Logo */}
-            <div className="flex items-center gap-2 select-none">
-              <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-md flex items-center justify-center ring-1 ring-white/30">
-                <span className="font-bold">M</span>
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl shadow-xl border-b border-gray-200/30 rounded-full">
+      <div className="w-full max-w-8xl mx-auto px-4 lg:px-8">
+        <nav className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <span className="text-white font-bold text-lg">M</span>
               </div>
-              <h1
-                className={`${
-                  darkMode || isOpen ? "text-white" : "text-white"
-                } text-2xl font-extrabold tracking-tight`}
-              >
-                Motivoc
-              </h1>
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
             </div>
+            <h1 className="text-2xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
+              Motivoc
+            </h1>
+          </Link>
 
-            {/* Desktop Nav Links */}
-            <div className="hidden md:block">
-              <ul
-                className={`flex gap-8 font-medium ${
-                  darkMode ? "text-white/90" : "text-white"
-                }`}
-              >
-                <Link to="/"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">Home</li></Link>
-                <Link to="/about"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">About</li></Link>
-                <Link to="/contact"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">Contact</li></Link>
-                <Link to="/event/list"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">Events</li></Link>
-                <Link to="/view/all/booking"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">my_bookings</li></Link>
-                <Link to="/notification"><li className="px-4 py-1 text-lg rounded-3xl hover:bg-white/20">Not</li></Link>
+          {/* Desktop Links */}
+          <div className="hidden lg:flex items-center space-x-1">
+            <Link to="/" className="nav-link-light hover:text-blue-600 font-medium">Home</Link>
+            <Link to="/event/list" className="nav-link-light hover:text-blue-600 font-medium">Events</Link>
+            <Link to="/view/all/booking" className="nav-link-light hover:text-blue-600 font-medium">Bookings</Link>
+            <Link to="/my/notification" className="nav-link-light hover:text-blue-600 font-medium">Notifications</Link>
+            <Link to="/support-ticket/create" className="nav-link-light hover:text-blue-600 font-medium">Support</Link>
+          </div>
 
-
-              </ul>
-            </div>
-
-            {/* Desktop Search + Register */}
-            <div className="hidden lg:flex items-center gap-3 relative">
-              <div
-                className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-white/90 transition-colors duration-300 ${
-                  darkMode
-                    ? "bg-white/10 border border-white/25 text-white"
-                    : "bg-white/10 border border-white/25 text-gray-900"
-                }`}
-              >
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Search categories..."
-                  className="bg-transparent placeholder-white/70 text-inherit text-sm outline-none w-32 focus:w-48 transition-all"
-                />
-
-                {/* ✅ Search Button now works dynamically */}
-                <button
-                  onClick={handleSubmitSearch}
-                  className="px-3 py-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm"
-                >
-                  Search
-                </button>
-
-                {showSuggestions && filtered.length > 0 && (
-                  <ul className="absolute top-12 left-0 w-56 bg-white text-gray-800 rounded-xl shadow-lg overflow-hidden z-40">
-                    {filtered.map((item, idx) => (
-                      <li
-                        key={idx}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => handleSelect(item)}
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              <button className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold shadow-md hover:scale-105 transition-transform duration-300">
-                Register
-              </button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="flex items-center gap-2 lg:hidden">
-              <button
-                className={`inline-flex items-center justify-center h-10 w-10 rounded-xl border transition ${
-                  darkMode || isOpen
-                    ? "bg-[#0c1030]/90 text-white border-indigo-900/40"
-                    : "bg-white/20 text-gray-900 border-white/30"
-                }`}
-                onClick={() => setIsOpen((v) => !v)}
-                aria-label="Toggle menu"
-              >
-                {isOpen ? "✖" : "☰"}
-              </button>
-            </div>
-          </section>
-
-          {/* Mobile Dropdown */}
-          {isOpen && (
-            <div className="lg:hidden mt-2 px-4">
-              <div
-                className={`rounded-2xl backdrop-blur-md border shadow-lg p-2 transition-colors duration-300 ${
-                  darkMode
-                    ? "bg-[#0c1030]/95 border-indigo-900/40 text-white"
-                    : "bg-[#0c1030]/90 text-white border-indigo-900/40"
-                }`}
-              >
-                {/* Search */}
-                <div className="mb-4">
-                  <div
-                    className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition-colors duration-300 ${
-                      darkMode
-                        ? "bg-white/10 border border-white/25 text-white"
-                        : "bg-white/50 border border-gray-200 text-gray-900"
-                    }`}
-                  >
-                    <input
-                      type="text"
-                      value={search}
-                      onChange={(e) => handleSearch(e.target.value)}
-                      placeholder="Search categories..."
-                      className="bg-transparent outline-none flex-1 placeholder-white/70 text-inherit"
-                    />
+          {/* Search + Profile */}
+          <div className="hidden lg:flex items-center space-x-4 relative">
+            {/* Search */}
+            <div className="relative group">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => handleSearch(e.target.value)}
+                placeholder="Search events..."
+                className="bg-gray-50 border border-gray-200 rounded-full px-4 py-2 shadow-sm outline-none w-40 focus:w-60 transition-all duration-300"
+              />
+              {showSuggestions && filtered.length > 0 && (
+                <div className="absolute top-full left-0 mt-2 w-full bg-white rounded-xl shadow-xl overflow-hidden z-50 border border-gray-200">
+                  {filtered.map((item, idx) => (
                     <button
-                      onClick={() => {
-                        handleSubmitSearch();
-                        setIsOpen(false);
-                      }}
-                      className="px-3 py-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm"
+                      key={idx}
+                      className="w-full px-4 py-2 text-left hover:bg-blue-50"
+                      onClick={() => handleSelect(item)}
                     >
-                      Search
+                      {item}
                     </button>
-                  </div>
-                  {showSuggestions && filtered.length > 0 && (
-                    <ul className="mt-2 bg-white text-gray-800 rounded-xl shadow-lg overflow-hidden">
-                      {filtered.map((item, idx) => (
-                        <li
-                          key={idx}
-                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                          onClick={() => handleSelect(item)}
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  ))}
                 </div>
-                {/* Mobile Links */}
-                <ul className="flex flex-col gap-2 font-medium">
-                  <Link to="/" onClick={() => setIsOpen(false)}>
-                    <li className="px-4 py-2 rounded-xl hover:bg-white/20">Home</li>
-                  </Link>
-                  <Link to="/about" onClick={() => setIsOpen(false)}>
-                    <li className="px-4 py-2 rounded-xl hover:bg-white/20">About</li>
-                  </Link>
-                  <Link to="/contact" onClick={() => setIsOpen(false)}>
-                    <li className="px-4 py-2 rounded-xl hover:bg-white/20">Contact</li>
-                  </Link>
-                  <Link to="/events" onClick={() => setIsOpen(false)}>
-                    <li className="px-4 py-2 rounded-xl hover:bg-white/20">Events</li>
-                  </Link>
-                  <button className="mt-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold shadow-md">
-                    Register
-                  </button>
-                </ul>
-              </div>
+              )}
             </div>
-          )}
-        </div>
-      </section>
-    </div>
+
+            {/* Profile */}
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="h-10 w-10 rounded-full bg-gradient-to-tr from-gray-300 to-gray-100 flex items-center justify-center shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                <span className="text-gray-800 font-semibold">U</span>
+              </button>
+
+              {profileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200 z-50 text-start">
+                  <Link
+                    to={userId ? `/profile/${userId}` : "/login"}
+                    className="block px-4 py-2 hover:bg-gray-100 font-medium"
+                  >
+                    Profile
+                  </Link>
+                  
+                  <button
+                    className="text-start w-full px-4 py-2 hover:bg-gray-100 font-medium"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden p-2 rounded-xl bg-gray-100 hover:bg-gray-200"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
   );
 };
 
