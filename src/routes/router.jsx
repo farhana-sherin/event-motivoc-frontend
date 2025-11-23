@@ -14,7 +14,7 @@ import ViewAllBooking from "../pages/ViewAllBooking";
 
 import BecomeOrganizerPage from "../pages/BecomeOrganizerPage";
 import OrganizerDashboard from "../pages/OrganizerDashboard";
-import OrganizerEvents from "../component/organizerevents";
+import OrganizerEvents from "../component/OrganizerEvents";
 import OrganizerEventList from "../component/OrganizerEventList";
 import OrganizerEventDetails from "../component/OrganizerEventDetails";
 import OrganizerBooked from "../component/OrganizerBooked";
