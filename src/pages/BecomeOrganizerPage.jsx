@@ -19,8 +19,8 @@ const BecomeOrganizerPage = () => {
         alert("You are now an Organizer!");
       }
 
-      // Navigate to dashboard in all cases
-      navigate("/dashboard");
+     
+      navigate("/auth/dashboard");
     } catch (error) {
       console.error(error);
       alert("Failed to become an organizer");

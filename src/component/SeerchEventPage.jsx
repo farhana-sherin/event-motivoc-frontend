@@ -63,7 +63,7 @@ const SearchEventsPage = () => {
               return (
                 <Link
                   key={event.id}
-                  to={`/event/detail/${event.id}`}
+                  to={`/auth/event/detail/${event.id}`}
                   className="group relative bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden"
                 >
                   {/* Event Image */}

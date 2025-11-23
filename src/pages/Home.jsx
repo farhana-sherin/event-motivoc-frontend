@@ -11,6 +11,7 @@ import HowItWorks from '../component/HowItWorks';
 import UpcomingEvents from '../component/UpcomingEvents';
 import FeaturedEvents from '../component/FeaturedEvents';
 import BecomeOrganizerSection from '../component/BecomeOrganizerSection';
+import RecommendedEvents from '../component/airecommendation';
 
 export const Home = () => { 
     const [banner,setBanner]=useState([]);
@@ -76,7 +77,10 @@ export const Home = () => {
         </Swiper>
       </section>
       <HowItWorks/>
+      
       <UpcomingEvents/>
+      <RecommendedEvents/>
+
       <FeaturedEvents/>
       <BecomeOrganizerSection/>
       

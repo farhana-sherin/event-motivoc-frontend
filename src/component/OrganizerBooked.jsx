@@ -102,7 +102,7 @@ const OrganizerBooked = () => {
         {/* Footer */}
         <div className="px-6 py-4 border-t bg-gray-50 flex justify-end">
           <Link
-            to="/organizer/bookings"
+            to="/auth/organizer/bookings"
             className="px-4 py-2 rounded-lg bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
           >
             Back to Bookings

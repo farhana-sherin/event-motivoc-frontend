@@ -156,7 +156,7 @@ const EventListPage = () => {
                     </p>
                     <p className="text-base font-medium text-gray-900 mb-4">₹{event.price}</p>
 
-                    <Link to={`/event/detail/${event.id}`}>
+                    <Link to={`/auth/event/detail/${event.id}`}>
                       <span className="mt-auto inline-block text-center px-5 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl shadow hover:opacity-90 transition duration-300">
                         View Details
                       </span>

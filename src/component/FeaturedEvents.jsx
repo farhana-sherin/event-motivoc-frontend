@@ -94,7 +94,7 @@ const FeaturedEvents = () => {
                     <span className="text-gray-700 font-semibold">
                       {event.start_date || "Date TBA"}
                     </span>
-                    <Link to={`/event/detail/${event.id}`}>
+                    <Link to={`/auth/event/detail/${event.id}`}>
                       <button className="w-full px-3 py-2 rounded-2xl text-white font-bold text-lg tracking-wide bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg">
                         View Details
                       </button>

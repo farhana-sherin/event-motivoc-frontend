@@ -16,7 +16,7 @@ const EventReviewPage = () => {
   const fetchReviews = async () => {
     setLoading(true);
     try {
-      const res = await axiosInstance.get(`customer/event/${id}/ratings/`, {
+      const res = await axiosInstance.get(`customer/event/all/ratings/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setReviews(res.data.data || []);

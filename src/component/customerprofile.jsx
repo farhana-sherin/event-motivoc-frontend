@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../config/axiosinstance";
+import { Pencil, Mail, Phone, User, Save, X } from "lucide-react";
 
 const ProfilePage = () => {
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     const fetchProfile = async () => {
       setLoading(true);
-      setError("");
       try {
         const token = localStorage.getItem("token");
         const res = await axiosInstance.get(`customer/profile/${id}/`, {
@@ -20,6 +22,7 @@ const ProfilePage = () => {
 
         if (res.data.status_code === 6000) {
           setProfile(res.data.data);
+          setFormData(res.data.data);
         } else {
           setError(res.data.message || "Failed to fetch profile");
         }
@@ -33,9 +36,42 @@ const ProfilePage = () => {
     fetchProfile();
   }, [id]);
 
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  // Accept event when used as form onSubmit
+  const handleUpdate = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axiosInstance.put(
+        `customer/profile/update/${id}/`,
+        formData,
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
+      );
+
+      if (res.data.status_code === 6000) {
+        setProfile(res.data.data);
+        setEditMode(false);
+        alert("✅ Profile updated successfully");
+      } else {
+        alert(res.data.message || "Update failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong while updating");
+    }
+  };
+
   if (loading)
     return (
-      <div className="flex justify-center items-center h-[60vh]">
+      <div className="flex justify-center items-center h-[70vh]">
         <p className="text-gray-500 animate-pulse">Loading profile...</p>
       </div>
     );
@@ -54,58 +90,171 @@ const ProfilePage = () => {
       </div>
     );
 
-  const { role, email, username, first_name, last_name, phone, customer, organizer, admin } = profile;
-
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">
-        Profile
-      </h2>
-
-      <div className="bg-white shadow-md rounded-lg p-6 space-y-4">
-        <div>
-          <span className="font-semibold">Role: </span>
-          <span className="text-gray-700 capitalize">{role}</span>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-200 py-10 px-4">
+      <div className="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl p-8 border border-gray-100">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b pb-6 mb-6">
+          <h2 className="text-3xl font-bold text-indigo-700">My Profile</h2>
+          {!editMode && (
+            <button
+              onClick={() => setEditMode(true)}
+              className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition shadow-md"
+              aria-label="Edit profile"
+            >
+              <Pencil size={18} /> Edit
+            </button>
+          )}
         </div>
 
-        <div>
-          <span className="font-semibold">Name: </span>
-          <span className="text-gray-700">{first_name} {last_name}</span>
-        </div>
+        {/* View mode */}
+        {!editMode ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-white shadow-sm flex items-center gap-3">
+              <User className="text-indigo-600" />
+              <div>
+                <p className="text-sm text-gray-500">Name</p>
+                <p className="text-lg font-semibold text-gray-900">
+                  {profile.first_name} {profile.last_name}
+                </p>
+              </div>
+            </div>
 
-        <div>
-          <span className="font-semibold">Username: </span>
-          <span className="text-gray-700">{username}</span>
-        </div>
+            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-white shadow-sm flex items-center gap-3">
+              <User className="text-indigo-600" />
+              <div>
+                <p className="text-sm text-gray-500">Username</p>
+                <p className="text-lg font-semibold text-gray-900">
+                  {profile.username}
+                </p>
+              </div>
+            </div>
 
-        <div>
-          <span className="font-semibold">Email: </span>
-          <span className="text-gray-700">{email}</span>
-        </div>
+            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-white shadow-sm flex items-center gap-3">
+              <Mail className="text-indigo-600" />
+              <div>
+                <p className="text-sm text-gray-500">Email</p>
+                <p className="text-lg font-semibold text-gray-900">
+                  {profile.email}
+                </p>
+              </div>
+            </div>
 
-        <div>
-          <span className="font-semibold">Phone: </span>
-          <span className="text-gray-700">{phone || "N/A"}</span>
-        </div>
+            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-white shadow-sm flex items-center gap-3">
+              <Phone className="text-indigo-600" />
+              <div>
+                <p className="text-sm text-gray-500">Phone</p>
+                <p className="text-lg font-semibold text-gray-900">
+                  {profile.phone || "N/A"}
+                </p>
+              </div>
+            </div>
 
-        {/* Extra info for roles */}
-        {role === "admin" && admin && (
-          <div>
-            <span className="font-semibold">Admin ID: </span>
-            <span className="text-gray-700">{admin.id}</span>
+            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-white shadow-sm flex items-center gap-3 col-span-1 sm:col-span-2">
+              <User className="text-indigo-600" />
+              <div>
+                <p className="text-sm text-gray-500">Role</p>
+                <p className="text-lg font-semibold text-gray-900 capitalize">
+                  {profile.role}
+                </p>
+              </div>
+            </div>
           </div>
-        )}
-        {role === "organizer" && organizer && (
-          <div>
-            <span className="font-semibold">Organizer ID: </span>
-            <span className="text-gray-700">{organizer.id}</span>
-          </div>
-        )}
-        {role === "customer" && customer && (
-          <div>
-            <span className="font-semibold">Customer ID: </span>
-            <span className="text-gray-700">{customer.id}</span>
-          </div>
+        ) : (
+          // EDIT MODE — labels + placeholders (form)
+          <form onSubmit={handleUpdate} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">First name</label>
+                <input
+                  type="text"
+                  name="first_name"
+                  value={formData.first_name || ""}
+                  onChange={handleChange}
+                  placeholder="John"
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Last name</label>
+                <input
+                  type="text"
+                  name="last_name"
+                  value={formData.last_name || ""}
+                  onChange={handleChange}
+                  placeholder="Doe"
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username || ""}
+                  onChange={handleChange}
+                  placeholder="your_username"
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ""}
+                  onChange={handleChange}
+                  placeholder="name@example.com"
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Phone</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone || ""}
+                  onChange={handleChange}
+                  placeholder="+91 98765 43210"
+                  className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">Role (read-only)</label>
+                <input
+                  type="text"
+                  name="role"
+                  value={formData.role || profile.role || ""}
+                  readOnly
+                  className="w-full px-4 py-3 border rounded-lg bg-gray-50 text-gray-600"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <button
+                type="submit"
+                className="flex-1 flex items-center justify-center gap-2 bg-green-600 text-white py-3 px-4 rounded-lg shadow-lg hover:bg-green-700 transition"
+              >
+                <Save size={18} /> Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEditMode(false);
+                  setFormData(profile); // revert changes
+                }}
+                className="flex-1 flex items-center justify-center gap-2 bg-gray-400 text-white py-3 px-4 rounded-lg shadow-lg hover:bg-gray-500 transition"
+              >
+                <X size={18} /> Cancel
+              </button>
+            </div>
+          </form>
         )}
       </div>
     </div>

@@ -79,7 +79,7 @@ export const OrganizerDashboard = () => {
           </div>
 
           {/* Status Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
             {/* Total Events */}
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="flex items-center justify-between">
@@ -139,13 +139,21 @@ export const OrganizerDashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Additional Stats */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-           
-
-           
+            {/* ✅ Total Customers */}
+            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">Total Customers</p>
+                  <p className="text-3xl font-bold text-pink-600 mt-2">{dashboard.total_customers}</p>
+                </div>
+                <div className="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5V4H2v16h5m10-6a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Bookings Section */}

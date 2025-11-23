@@ -131,7 +131,7 @@ const ViewAllBooking = () => {
 
                     <div className="flex items-center justify-between">
                       <Link
-                        to={`/booking/${booking.id}`}
+                        to={`/auth/booking/${booking.id}`}
                         className="text-blue-600 font-medium hover:underline"
                       >
                         View Booking →
@@ -140,7 +140,7 @@ const ViewAllBooking = () => {
                       {activeTab === "past" && booking.can_review && (
                         <button
                           onClick={() =>
-                            navigate(`/event/${event.id}/reviews`)
+                            navigate(`/auth/event/${event.id}/reviews`)
                           }
                           className="px-4 py-2 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-700 transition"
                         >

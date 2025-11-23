@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const Footer = () => {
   return (
@@ -22,11 +23,11 @@ export const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-3">Useful Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><a className="hover:text-white" href="#">About</a></li>
-              <li><a className="hover:text-white" href="#">Blog</a></li>
-              <li><a className="hover:text-white" href="#">Venue</a></li>
-              <li><a className="hover:text-white" href="#">Contact</a></li>
-            </ul>
+             <li> <Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+             <li> <Link to="/auth/event/list" className="hover:text-white transition-colors">Events</Link></li>
+             <li> <Link to="/auth/view/all/booking" className="hover:text-white transition-colors">Bookings</Link></li>
+             <li> <Link to="/auth/support-ticket/create" className="hover:text-white transition-colors">Support</Link></li>
+              </ul>
           </div>
 
           <div>
@@ -68,15 +69,15 @@ export const Footer = () => {
         <div className="mt-10 border-t border-indigo-800/30 pt-6 flex justify-between items-center gap-2 mb-10">
          
           <div className="flex items-center gap-4 text-xs text-gray-400">
-            <a href="#" className="hover:text-white">Teams & Conditions</a>
+            <a href="#" className="hover:text-white transition-colors">Teams & Conditions</a>
             <span className="text-indigo-700">|</span>
-            <a href="#" className="hover:text-white">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
           </div>
           <p className="text-xs text-gray-500">Copyright © {new Date().getFullYear()} Motivec Demo3. All Rights Reserved.</p>
         </div>
       </div>
 
-      <a href="#top" className="hidden md:flex items-center justify-center h-10 w-10 rounded-full bg-gradient-to-r from-pink-500 to-indigo-600 text-white shadow-md absolute right-5 bottom-5">↑</a>
+      <a href="#top" className="hidden md:flex items-center justify-center h-10 w-10 rounded-full bg-gradient-to-r from-pink-500 to-indigo-600 text-white shadow-md hover:shadow-lg hover:scale-105 transition absolute right-5 bottom-5">↑</a>
     </footer>
   )
 }

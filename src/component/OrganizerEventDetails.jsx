@@ -95,7 +95,7 @@ const OrganizerEventDetails = () => {
           {/* Buttons */}
           <div className="flex gap-4 mt-4">
             <Link
-              to="/OrganizerEventList"
+              to="/auth/OrganizerEventList"
               className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition"
             >
               Back to My Events

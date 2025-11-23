@@ -35,10 +35,10 @@ const CreateEvent = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
+  
     try {
       const token = localStorage.getItem("token");
-
+  
       const formData = new FormData();
       formData.append("title", form.title);
       formData.append("short_description", form.short_description);
@@ -49,10 +49,14 @@ const CreateEvent = () => {
       formData.append("start_time", form.start_time);
       formData.append("end_date", form.end_date);
       formData.append("end_time", form.end_time);
-      formData.append("price", form.price);
+  
+      // ✅ Convert price to fixed 2 decimal string
+      formData.append("price", Number(form.price).toFixed(2));
       formData.append("ticket_count", form.ticket_count);
+  
+      // ✅ Ensure correct field name for backend
       if (form.image) formData.append("images", form.image);
-
+  
       const response = await axiosInstance.post(
         "organizer/event/create/",
         formData,
@@ -63,10 +67,10 @@ const CreateEvent = () => {
           },
         }
       );
-
+  
       if (response.data.status_code === 6000) {
         alert("Event created successfully!");
-        navigate("/OrganizerEventList");
+        navigate("/auth/OrganizerEventList");
       } else {
         setError(response.data.message || "Failed to create event");
       }
@@ -77,7 +81,6 @@ const CreateEvent = () => {
       setLoading(false);
     }
   };
-
   return (
     <OrganizerLayout>
       <div className="w-[95%] max-w-3xl mx-auto py-10">

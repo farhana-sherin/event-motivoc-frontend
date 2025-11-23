@@ -16,7 +16,7 @@ const UpdateEvent = () => {
     start_time: "",
     end_date: "",
     end_time: "",
-    price: "", // will be integer
+    price: "", // will be string with 2 decimals
     ticket_count: 1,
     image: null,
   });
@@ -47,7 +47,7 @@ const UpdateEvent = () => {
           start_time: e.start_time || "",
           end_date: e.end_date || "",
           end_time: e.end_time || "",
-          price: e.price !== null ? Math.round(e.price) : "", // convert to integer
+          price: e.price !== null ? Number(e.price).toFixed(2) : "", // ✅ keep 2 decimals
           ticket_count: e.ticket_count || 1,
           image: null,
         });
@@ -70,8 +70,7 @@ const UpdateEvent = () => {
     if (name === "image") {
       setForm({ ...form, image: files[0] });
     } else if (name === "price") {
-      const intVal = value === "" ? "" : parseInt(value); // always integer
-      setForm({ ...form, price: intVal });
+      setForm({ ...form, price: value }); // keep as string, will format on submit
     } else {
       setForm({ ...form, [name]: value });
     }
@@ -89,6 +88,8 @@ const UpdateEvent = () => {
       for (const key in form) {
         if (key === "image") {
           if (form.image) formData.append("images", form.image);
+        } else if (key === "price") {
+          formData.append("price", Number(form.price).toFixed(2)); // ✅ send with 2 decimals
         } else {
           formData.append(key, form[key]);
         }
@@ -107,7 +108,7 @@ const UpdateEvent = () => {
 
       if (response.data.status_code === 6000) {
         alert("Event updated successfully!");
-        navigate("/OrganizerEventList");
+        navigate("/auth/OrganizerEventList");
       } else {
         setError(response.data.message || "Failed to update event");
       }
@@ -253,7 +254,7 @@ const UpdateEvent = () => {
               value={form.price}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded"
-              step="1"
+              step="0.01"
               required
             />
           </div>

@@ -9,21 +9,21 @@ export const UserLayout = () => {
 
   // ✅ Cover all organizer-related pages explicitly
   const isOrganizerPage = [
-    '/dashboard',
-    '/become-organizer',
-    '/OrganizerEventList',
-    '/OrganizerEventDetail',
+    '/auth/dashboard',
+    '/auth/become-organizer',
+    '/auth/OrganizerEventList',
+    '/auth/OrganizerEventDetail',
     '/Organizerbooking/details',
-    '/event/create',
-    '/organizer/bookings',
-    '/cancelled/booking',
-    '/organizer/analytics',
-    '/admin/approved/events',
-    '/event/create',
-    '/event/update/',
-    '/organizer/events',
-    '/organizer/rating',
-    '/organizer/notification'
+    '/auth/event/create',
+    '/auth/organizer/bookings',
+    '/auth/cancelled/booking',
+    '/auth/organizer/analytics',
+    '/auth/admin/approved/events',
+    '/auth/event/create',
+    '/auth/event/update/',
+    '/auth/organizer/events',
+    '/auth/organizer/rating',
+    '/auth/organizer/notification'
   ].some(path => location.pathname.startsWith(path));
 
   return (

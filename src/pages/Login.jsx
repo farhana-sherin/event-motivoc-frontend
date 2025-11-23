@@ -1,8 +1,14 @@
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../config/axiosinstance";
 import { useNavigate, Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../component/AuthHook";
 
 export default function Login() {
+
+
+  const {login} = useContext(AuthContext)
+
   let navigate = useNavigate();
   const {
     register,
@@ -17,7 +23,7 @@ export default function Login() {
 
       console.log(response.data.data.access);
       let token = response.data.data.access;
-      localStorage.setItem("token", token);
+      login(token)
       navigate("/");
     } catch (error) {
       console.log(error);

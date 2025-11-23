@@ -16,7 +16,7 @@ export const BecomeOrganizerSection = () => {
       <div className="w-[95%] max-w-6xl mx-auto relative z-10">
         {/* Main Content */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 mb-8">
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 shadow-sm mb-8">
             <span className="text-2xl">🚀</span>
             <span className="text-indigo-300 font-semibold text-sm uppercase tracking-wider">Join Our Community</span>
           </div>
@@ -43,8 +43,8 @@ export const BecomeOrganizerSection = () => {
             
              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                <button 
-                 onClick={() => navigate('/become-organizer')}
-                 className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl"
+                 onClick={() => navigate('/auth/become-organizer')}
+                className="group px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/30 transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl"
                >
                  <span className="flex items-center gap-2">
                    Join Us Now
@@ -54,9 +54,12 @@ export const BecomeOrganizerSection = () => {
                  </span>
                </button>
                
-               <button className="px-8 py-4 bg-transparent border-2 border-indigo-500/30 text-white font-semibold rounded-2xl hover:bg-white/10 hover:border-indigo-400/50 transition-all duration-300">
-                 Learn More
-               </button>
+               <button
+                onClick={() => navigate('/auth/learn/more')}
+                className="px-8 py-4 bg-transparent border-2 border-indigo-500/30 text-white font-semibold rounded-2xl hover:bg-white/10 hover:border-indigo-400/50 transition-all duration-300"
+              >
+                Learn More
+              </button>
              </div>
 
             {/* Stats */}

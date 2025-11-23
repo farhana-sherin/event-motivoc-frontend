@@ -1,37 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../config/axiosinstance";
-import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
-import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
-import { useWishlist } from "../context/WishlistContext";
 
-const UpcomingEvents = () => {
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
+const RecommendedEvents = () => {
+  const [recommendedEvents, setRecommendedEvents] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const pageSize = 3;
 
-  const { wishlist, toggleWishlist } = useWishlist(); // use context
-
-  // Fetch upcoming events
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchRecommendations = async () => {
       try {
-        const res = await axiosInstance.get("customer/upcoming/event/");
-        setUpcomingEvents(res.data.data || []);
+        const token = localStorage.getItem("token");
+        const res = await axiosInstance.get("customer/recommendations/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setRecommendedEvents(res.data || []);
       } catch (error) {
-        console.error("Error fetching events:", error);
+        console.error("Error fetching recommendations:", error);
       }
     };
-    fetchEvents();
+    fetchRecommendations();
   }, []);
 
   // Pagination
-  const visibleEvents = upcomingEvents.slice(currentIndex, currentIndex + pageSize);
+  const visibleEvents = recommendedEvents.slice(
+    currentIndex,
+    currentIndex + pageSize
+  );
+
   const handleNext = () => {
-    if (currentIndex + pageSize < upcomingEvents.length) setCurrentIndex(currentIndex + pageSize);
+    if (currentIndex + pageSize < recommendedEvents.length) {
+      setCurrentIndex(currentIndex + pageSize);
+    }
   };
+
   const handlePrev = () => {
-    if (currentIndex - pageSize >= 0) setCurrentIndex(currentIndex - pageSize);
+    if (currentIndex - pageSize >= 0) {
+      setCurrentIndex(currentIndex - pageSize);
+    }
   };
 
   return (
@@ -39,9 +45,9 @@ const UpcomingEvents = () => {
       <div className="w-[95%] max-w-7xl mx-auto">
         <div className="flex items-end justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-            Upcoming Events
+            Recommended for You
           </h2>
-          {upcomingEvents.length > pageSize && (
+          {recommendedEvents.length > pageSize && (
             <div className="flex gap-3 items-center">
               <button
                 onClick={handlePrev}
@@ -52,7 +58,7 @@ const UpcomingEvents = () => {
               </button>
               <button
                 onClick={handleNext}
-                disabled={currentIndex + pageSize >= upcomingEvents.length}
+                disabled={currentIndex + pageSize >= recommendedEvents.length}
                 className="px-3 py-2 rounded-full bg-gray-200 text-gray-700 disabled:opacity-40"
               >
                 ➡
@@ -61,11 +67,11 @@ const UpcomingEvents = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {visibleEvents.map((event) => {
-            const isWishlisted = wishlist.includes(event.id);
-
-            return (
+        {recommendedEvents.length === 0 ? (
+          <p className="text-gray-600">No recommendations available.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {visibleEvents.map((event) => (
               <div
                 key={event.id}
                 className="group rounded-3xl overflow-hidden bg-white ring-1 ring-gray-200/60 shadow-sm hover:shadow-2xl hover:-translate-y-1 hover:ring-gray-300 transition-all duration-300"
@@ -83,18 +89,6 @@ const UpcomingEvents = () => {
                   <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full text-white text-xs font-medium shadow-sm bg-black/50 backdrop-blur">
                     {event.start_date}
                   </div>
-
-                  {/* Heart icon on top of image */}
-                  <button
-                    onClick={() => toggleWishlist(event.id)}
-                    className="absolute top-3 right-3 p-2 rounded-full transition-colors bg-white"
-                  >
-                    {isWishlisted ? (
-                      <HeartSolid className="w-6 h-6 text-red-500" />
-                    ) : (
-                      <HeartOutline className="w-6 h-6 text-black hover:text-red-500" />
-                    )}
-                  </button>
                 </div>
 
                 <div className="p-6 flex flex-col">
@@ -106,29 +100,29 @@ const UpcomingEvents = () => {
                   </p>
 
                   <div className="mt-4 flex items-center gap-2 text-sm text-slate-700">
-                    <span className="flex-1 min-w-0 truncate" title={event.location || event.venue}>
+                    <span
+                      className="flex-1 min-w-0 truncate"
+                      title={event.location || event.venue}
+                    >
                       📍 {event.location || event.venue || "Location TBA"}
                     </span>
                   </div>
 
                   <div className="mt-5">
-                 
-                <Link to={`/auth/event/detail/${event.id}`}>
-                  <button className="w-full px-4 py-2.5 rounded-2xl text-sm font-semibold text-white shadow-sm bg-gradient-to-r from-gray-900 to-gray-800 hover:from-black hover:to-gray-900 transition-colors">
-                    View Details
-                  </button>
-                </Link>
-
-
+                    <Link to={`/auth/event/detail/${event.id}`}>
+                      <button className="w-full px-4 py-2.5 rounded-2xl text-sm font-semibold text-white shadow-sm bg-gradient-to-r from-gray-900 to-gray-800 hover:from-black hover:to-gray-900 transition-colors">
+                        View Details
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-export default UpcomingEvents;
+export default RecommendedEvents;

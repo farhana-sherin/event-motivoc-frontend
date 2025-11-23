@@ -76,7 +76,7 @@ export const EventDetail = () => {
             </div>
               
 
-            <Link to={`/bookings/new?event=${event.id}`} className="  w-full px-3 py-3 rounded-2xl text-white font-bold text-lg tracking-wide bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg">
+            <Link to={`/auth/bookings/new?event=${event.id}`} className="  w-full px-3 py-3 rounded-2xl text-white font-bold text-lg tracking-wide bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg">
             Buy Now
             </Link>
           </div>

@@ -69,7 +69,7 @@ const OrganizerEvents = () => {
             <p className="text-gray-600">Manage and view all your created events.</p>
           </div>
           <button
-            onClick={() => navigate("/event/create")}
+            onClick={() => navigate("/auth/event/create")}
             className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,7 +115,7 @@ const OrganizerEvents = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                         <button
-                          onClick={() => navigate(`/event/update/${e.id}`)}
+                          onClick={() => navigate(`/auth/event/update/${e.id}`)}
                           className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 transition-colors duration-200 font-medium"
                         >
                           Edit
