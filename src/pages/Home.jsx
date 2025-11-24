@@ -20,13 +20,14 @@ export const Home = () => {
       const Banner=async()=>{
         try {
           const response=await axiosInstance.get("customer/banners/")
-          setBanner(response.data.data);
-
+          // Ensure we always set an array
+          const bannerData = response.data?.data || response.data || [];
+          setBanner(Array.isArray(bannerData) ? bannerData : []);
 
           
         } catch (error) {
           console.log(error);
-          
+          setBanner([]); // Set empty array on error
           
         }
 
@@ -41,10 +42,10 @@ export const Home = () => {
           pagination={{ clickable: true }}
           modules={[Pagination, Autoplay]}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
-          loop={banner.length > 1} 
+          loop={Array.isArray(banner) && banner.length > 1} 
           className="mySwiper"
         >
-          {banner.map((item)=>(
+          {Array.isArray(banner) && banner.map((item)=>(
            <SwiperSlide key={item.id}>
            <div className="relative w-full h-[100vh] flex items-center justify-center">
              <img

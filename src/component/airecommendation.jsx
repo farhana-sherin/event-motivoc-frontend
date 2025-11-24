@@ -14,22 +14,24 @@ const RecommendedEvents = () => {
         const res = await axiosInstance.get("customer/recommendations/", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setRecommendedEvents(res.data || []);
+        // Ensure we always set an array
+        const data = res.data;
+        setRecommendedEvents(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching recommendations:", error);
+        setRecommendedEvents([]); // Set empty array on error
       }
     };
     fetchRecommendations();
   }, []);
 
-  // Pagination
-  const visibleEvents = recommendedEvents.slice(
-    currentIndex,
-    currentIndex + pageSize
-  );
+  // Pagination - ensure recommendedEvents is always an array
+  const visibleEvents = Array.isArray(recommendedEvents)
+    ? recommendedEvents.slice(currentIndex, currentIndex + pageSize)
+    : [];
 
   const handleNext = () => {
-    if (currentIndex + pageSize < recommendedEvents.length) {
+    if (Array.isArray(recommendedEvents) && currentIndex + pageSize < recommendedEvents.length) {
       setCurrentIndex(currentIndex + pageSize);
     }
   };
@@ -47,7 +49,7 @@ const RecommendedEvents = () => {
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
             Recommended for You
           </h2>
-          {recommendedEvents.length > pageSize && (
+          {Array.isArray(recommendedEvents) && recommendedEvents.length > pageSize && (
             <div className="flex gap-3 items-center">
               <button
                 onClick={handlePrev}
@@ -67,7 +69,7 @@ const RecommendedEvents = () => {
           )}
         </div>
 
-        {recommendedEvents.length === 0 ? (
+        {!Array.isArray(recommendedEvents) || recommendedEvents.length === 0 ? (
           <p className="text-gray-600">No recommendations available.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
