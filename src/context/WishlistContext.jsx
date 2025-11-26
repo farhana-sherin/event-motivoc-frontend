@@ -12,16 +12,24 @@ export const WishlistProvider = ({ children }) => {
   useEffect(() => {
     const fetchWishlist = async () => {
       const token = localStorage.getItem("token");
-      if (!token) return;
+      if (!token) {
+        setWishlist([]);
+        return;
+      }
 
       try {
         const res = await axiosInstance.get("customer/wishlist/", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const ids = res.data.data.map((item) => item.event.id);
-        setWishlist(ids);
+        if (res.data && res.data.data && Array.isArray(res.data.data)) {
+          const ids = res.data.data.map((item) => item.event.id);
+          setWishlist(ids);
+        } else {
+          setWishlist([]);
+        }
       } catch (error) {
         console.error("Error fetching wishlist:", error);
+        setWishlist([]); // Set empty array on error
       }
     };
 
@@ -31,32 +39,53 @@ export const WishlistProvider = ({ children }) => {
   // Add to wishlist
   const addToWishlist = async (eventId) => {
     const token = localStorage.getItem("token");
-    if (!token) return alert("Please login to add wishlist");
+    if (!token) {
+      alert("Please login to add wishlist");
+      return;
+    }
 
     try {
-      await axiosInstance.post(
+      const response = await axiosInstance.post(
         `customer/wishlist/add/${eventId}/`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setWishlist((prev) => [...prev, eventId]);
+      if (response.data.status_code === 6000) {
+        setWishlist((prev) => {
+          if (!prev.includes(eventId)) {
+            return [...prev, eventId];
+          }
+          return prev;
+        });
+      }
     } catch (error) {
       console.error("Error adding to wishlist:", error);
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      }
     }
   };
 
   // Remove from wishlist
   const removeFromWishlist = async (eventId) => {
     const token = localStorage.getItem("token");
-    if (!token) return alert("Please login to remove wishlist");
+    if (!token) {
+      alert("Please login to remove wishlist");
+      return;
+    }
 
     try {
-      await axiosInstance.delete(`customer/wishlist/remove/${eventId}/`, {
+      const response = await axiosInstance.delete(`customer/wishlist/remove/${eventId}/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setWishlist((prev) => prev.filter((id) => id !== eventId));
+      if (response.data.status_code === 6000) {
+        setWishlist((prev) => prev.filter((id) => id !== eventId));
+      }
     } catch (error) {
       console.error("Error removing from wishlist:", error);
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      }
     }
   };
 
