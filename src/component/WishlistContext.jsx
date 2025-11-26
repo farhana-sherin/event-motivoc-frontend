@@ -15,7 +15,7 @@ export const WishlistProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        const res = await axiosInstance.get("customer/my_wishlist/", {
+        const res = await axiosInstance.get("customer/wishlist/", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const ids = res.data.data.map((item) => item.event.id);
