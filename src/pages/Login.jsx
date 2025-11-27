@@ -23,8 +23,16 @@ export default function Login() {
 
       console.log(response.data.data.access);
       let token = response.data.data.access;
+      let role = response.data.data.role;
+      console.log(role);
+      
       login(token)
-      navigate("/");
+      if (role === 'organizer') {
+
+        navigate("/auth/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
