@@ -154,7 +154,7 @@ const OrganizerEventRatings = () => {
     );
   };
 
-  return <OrganizerLayout>{content()}</OrganizerLayout>;
+  return <>{content()}</>;
 };
 
 export default OrganizerEventRatings;

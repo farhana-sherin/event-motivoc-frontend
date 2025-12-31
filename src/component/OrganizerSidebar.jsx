@@ -47,11 +47,11 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
       path: "/auth/organizer/bookings",
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002-2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
         </svg>
       )
     },
-    
+
     {
       title: "Analytics",
       path: "/auth/organizer/analytics",
@@ -81,6 +81,15 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
       )
     },
     {
+      title: "Profile",
+      path: "/auth/organizer/profile",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      )
+    },
+    {
       title: "Ratings",
       path: "/auth/organizer/rating",
       icon: (
@@ -92,21 +101,19 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
   ];
 
   return (
-    <aside className={`fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 shadow-lg  ${
-      isCollapsed ? "w-16" : "w-64"
-    }`}>
+    <aside className={`fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 shadow-lg ${isCollapsed ? "w-16" : "w-64"}`}>
       {/* Sidebar Content */}
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full overflow-y-auto">
         {/* Toggle Button */}
         <div className="p-4 border-b border-gray-200">
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="w-full flex items-center justify-center p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-300 group"
           >
-            <svg 
-              className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${isCollapsed ? "rotate-180" : ""}`} 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className={`w-5 h-5 text-gray-600 transition-transform duration-300 ${isCollapsed ? "rotate-180" : ""}`}
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
@@ -122,11 +129,10 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
               <Link
                 key={index}
                 to={item.path}
-                className={`group flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${
-                  isActive
+                className={`group flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${isActive
                     ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 border border-blue-200 shadow-sm"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <div className={`flex-shrink-0 transition-transform duration-300 ${isActive ? "scale-110 text-blue-600" : "group-hover:scale-105 text-gray-500 group-hover:text-gray-700"}`}>
                   {item.icon}
@@ -141,7 +147,26 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
           })}
         </nav>
 
-     
+      </div>
+
+      {/* Logout Section */}
+      <div className="p-4 border-t border-gray-200">
+        <button
+          onClick={() => {
+            localStorage.removeItem("token");
+            window.location.href = "/login";
+          }}
+          className={`flex items-center space-x-3 px-4 py-3 rounded-xl w-full transition-all duration-300 text-red-500 hover:bg-red-50 hover:text-red-700 group`}
+        >
+          <div className="flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </div>
+          {!isCollapsed && (
+            <span className="font-medium">Logout</span>
+          )}
+        </button>
       </div>
     </aside>
   );

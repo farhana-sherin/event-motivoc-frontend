@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../config/axiosinstance";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import OrganizerLayout from "./OrganizerLayout";
 
 const OrganizerEvents = () => {
@@ -13,13 +13,34 @@ const OrganizerEvents = () => {
     setLoading(true);
     const token = localStorage.getItem("token");
     try {
-      const response = await axiosInstance.get("organizer/events/upcoming/", {
+      // Log the request for debugging
+      console.log("Fetching organizer events with token:", token ? token.substring(0, 10) + "..." : "No token");
+
+      // Changed from "organizer/events/upcoming/" to "organizer/event/list/" to fetch all events
+      const response = await axiosInstance.get("organizer/event/list/", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setEvents(response.data.data || []);
+
+      console.log("Events API response:", response);
+
+      // Handle different response formats
+      let eventsData = [];
+      if (response.data && Array.isArray(response.data)) {
+        eventsData = response.data;
+      } else if (response.data && response.data.data) {
+        if (Array.isArray(response.data.data)) {
+          eventsData = response.data.data;
+        } else if (Array.isArray(response.data.data.events)) {
+          eventsData = response.data.data.events;
+        }
+      }
+
+      console.log("Processed events data:", eventsData);
+      setEvents(eventsData);
     } catch (err) {
       console.error("Error fetching events:", err);
-      alert("Failed to fetch events");
+      console.error("Error response:", err.response);
+      alert("Failed to fetch events: " + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }
@@ -38,7 +59,8 @@ const OrganizerEvents = () => {
       fetchEvents(); // refresh list
     } catch (err) {
       console.error("Error deleting event:", err);
-      alert("Failed to delete event");
+      console.error("Error response:", err.response);
+      alert("Failed to delete event: " + (err.response?.data?.message || err.message));
     }
   };
 
@@ -89,6 +111,7 @@ const OrganizerEvents = () => {
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Start Date</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">End Date</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tickets</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
@@ -96,32 +119,40 @@ const OrganizerEvents = () => {
                 {events.length > 0 ? (
                   events.map((e) => (
                     <tr
-                      key={e.id}
+                      key={e.id || e._id}
                       className="hover:bg-gray-50 transition-colors duration-200"
                     >
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">{e.title}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{e.start_date || "-"}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{e.end_date || "-"}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">{e.title || "Untitled Event"}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{e.start_date ? new Date(e.start_date).toLocaleDateString() : "-"}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{e.end_date ? new Date(e.end_date).toLocaleDateString() : "-"}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
-                          e.status.toLowerCase() === 'approved' 
-                            ? 'bg-green-100 text-green-800' 
-                            : e.status.toLowerCase() === 'pending'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {e.status}
+                        <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${e.status === 'APPROVED'
+                            ? 'bg-green-100 text-green-800'
+                            : e.status === 'PENDING'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : e.status === 'CANCELLED'
+                                ? 'bg-red-100 text-red-800'
+                                : 'bg-gray-100 text-gray-800'
+                          }`}>
+                          {e.status || "UNKNOWN"}
                         </span>
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-600">{e.ticket_count || e.tickets || 0}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        <button
-                          onClick={() => navigate(`/auth/event/update/${e.id}`)}
-                          className="px-4 py-2 bg-yellow-100 text-yellow-700 rounded-lg hover:bg-yellow-200 transition-colors duration-200 font-medium"
+                        <Link
+                          to={`/auth/event/update/${e.id || e._id}`}
+                          className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200 font-medium"
                         >
                           Edit
-                        </button>
+                        </Link>
+                        <Link
+                          to={`/auth/OrganizerEventDetail/${e.id || e._id}`}
+                          className="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition-colors duration-200 font-medium"
+                        >
+                          View
+                        </Link>
                         <button
-                          onClick={() => deleteEvent(e.id)}
+                          onClick={() => deleteEvent(e.id || e._id)}
                           className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors duration-200 font-medium"
                         >
                           Delete
@@ -131,7 +162,7 @@ const OrganizerEvents = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center">
+                    <td colSpan={6} className="px-6 py-12 text-center">
                       <div className="flex flex-col items-center">
                         <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                           <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -153,9 +184,9 @@ const OrganizerEvents = () => {
   };
 
   return (
-    <OrganizerLayout>
+    <>
       {content()}
-    </OrganizerLayout>
+    </>
   );
 };
 

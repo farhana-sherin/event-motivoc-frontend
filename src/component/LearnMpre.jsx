@@ -1,16 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const LearnMorePage = () => {
     const navigate = useNavigate();
   return (
-    <section className="relative min-h-screen bg-[#0c1030] text-white py-20 px-4 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-b from-[#070710] via-[#0c1020] to-[#130c26] text-white py-20 px-4 overflow-hidden">
       {/* Background Blurs */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-[#0c1020]/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#130c26]/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#070710]/10 rounded-full blur-3xl"></div>
       </div>
 
       {/* Main Content */}
@@ -49,7 +48,7 @@ const LearnMorePage = () => {
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
               Join thousands of organizers creating unforgettable experiences. Click below to begin your journey and start hosting amazing events.
             </p>
-            <button className="px-10 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl" 
+            <button className="px-10 py-4 bg-gradient-to-r from-[#070710] to-[#130c26] text-white font-bold rounded-2xl hover:from-[#130c26] hover:to-[#070710] transition-all duration-300 shadow-xl hover:shadow-2xl border border-indigo-500/20" 
              onClick={() => navigate('/auth/become-organizer')}>
               Join Us Now
             </button>

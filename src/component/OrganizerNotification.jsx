@@ -27,7 +27,7 @@ const OrganizerNotifications = () => {
   }, []);
 
   return (
-    <OrganizerLayout>
+    <>
       {loading ? (
         <div className="flex justify-center items-center h-[60vh]">
           <p className="text-gray-500 animate-pulse">
@@ -47,9 +47,8 @@ const OrganizerNotifications = () => {
             {notifications.map((notif) => (
               <div
                 key={notif.id}
-                className={`p-4 rounded-lg shadow ${
-                  notif.is_read ? "bg-gray-100" : "bg-blue-50"
-                }`}
+                className={`p-4 rounded-lg shadow ${notif.is_read ? "bg-gray-100" : "bg-blue-50"
+                  }`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="font-semibold text-gray-900">{notif.title}</h3>
@@ -64,7 +63,7 @@ const OrganizerNotifications = () => {
           </div>
         </div>
       )}
-    </OrganizerLayout>
+    </>
   );
 };
 

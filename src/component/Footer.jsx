@@ -3,81 +3,91 @@ import { Link } from 'react-router-dom'
 
 export const Footer = () => {
   return (
-    <footer className="relative bg-[#0c1030] text-gray-300">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(255,255,255,0.06),transparent_35%),radial-gradient(circle_at_80%_60%,rgba(255,255,255,0.05),transparent_45%)]" />
-      <div className="w-[95%] max-w-7xl mx-auto relative">
-        {/* Newsletter row at top of footer */}
-        
-        <div className="border-t border-indigo-800/30" />
-        <div className="py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
-          <div>
-          <div className="flex items-center gap-2 select-none">
-              <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-md flex items-center justify-center ring-1 ring-white/30">
-                <span className="font-bold">M</span>
+    <footer className="relative text-white font-sans border-t border-[#2D2D35]">
+      {/* Decorative Gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(255,0,85,0.05),transparent_35%),radial-gradient(circle_at_80%_60%,rgba(112,0,255,0.05),transparent_45%)]" />
+
+      <div className="w-[95%] max-w-7xl mx-auto relative pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          {/* Brand Column */}
+          <div className="space-y-6">
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="h-10 w-10 rounded-lg bg-[var(--color-primary)] flex items-center justify-center text-white font-black text-xl shadow-[0_0_15px_rgba(255,0,85,0.5)]">
+                E
               </div>
-              <h1 className="text-2xl font-extrabold text-white tracking-tight">Motivoc</h1>
-            </div>
-            <p className="mt-3 text-gray-400">Discover, book, and enjoy the best events around you.</p>
+              <h1 className="text-2xl font-black text-white tracking-tighter">
+                Event<span className="text-[var(--color-primary)]">Hub</span>
+              </h1>
+            </Link>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Discover and book the best events in your city. From workshops to conferences, we bring people together for unforgettable experiences.
+            </p>
           </div>
 
+          {/* Links Column 1 */}
           <div>
-            <h4 className="text-white font-semibold mb-3">Useful Links</h4>
-            <ul className="space-y-2 text-sm">
-             <li> <Link to="/" className="hover:text-white transition-colors">Home</Link></li>
-             <li> <Link to="/auth/event/list" className="hover:text-white transition-colors">Events</Link></li>
-             <li> <Link to="/auth/view/all/booking" className="hover:text-white transition-colors">Bookings</Link></li>
-             <li> <Link to="/auth/support-ticket/create" className="hover:text-white transition-colors">Support</Link></li>
-              </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Contact Us</h4>
-            <ul className="space-y-2 text-sm">
-              <li className="text-gray-400">(02) 574 - 328 - 301</li>
-              <li className="text-gray-400">support@example.com</li>
-              <li className="text-gray-400">156 Michael Ct, Anchorage</li>
+            <h4 className="text-white font-bold mb-6 text-lg tracking-wide">Explore</h4>
+            <ul className="space-y-4 text-sm text-gray-400">
+              <li><Link to="/" className="hover:text-[var(--color-primary)] transition-colors">Home</Link></li>
+              <li><Link to="/auth/event/list" className="hover:text-[var(--color-primary)] transition-colors">All Events</Link></li>
+              <li><Link to="/auth/view/all/booking" className="hover:text-[var(--color-primary)] transition-colors">My Bookings</Link></li>
+              <li><Link to="/auth/support-ticket/create" className="hover:text-[var(--color-primary)] transition-colors">Support Center</Link></li>
             </ul>
           </div>
 
+          {/* Links Column 2 */}
           <div>
-            <h4 className="text-white font-semibold mb-3">Our Social</h4>
-            <div className="flex items-center gap-3">
-              <a aria-label="Facebook" href="#" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                  <path d="M22 12.06C22 6.49 17.52 2 11.94 2 6.37 2 1.88 6.49 1.88 12.06c0 4.99 3.65 9.13 8.43 10v-7.07H7.9v-2.93h2.41V9.41c0-2.38 1.42-3.7 3.6-3.7 1.04 0 2.13.19 2.13.19v2.34h-1.2c-1.18 0-1.55.73-1.55 1.48v1.78h2.64l-.42 2.93h-2.22V22c4.79-.87 8.44-5.01 8.44-9.94z"/>
-                </svg>
+            <h4 className="text-white font-bold mb-6 text-lg tracking-wide">Contact</h4>
+            <ul className="space-y-4 text-sm text-gray-400">
+              <li className="flex items-start gap-3">
+                <span className="text-[var(--color-primary)]">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                </span>
+                <span>(02) 574 - 328 - 301</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[var(--color-primary)]">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                </span>
+                <span>hello@eventhub.com</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[var(--color-primary)]">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                </span>
+                <span>156 Innovation Blvd, Tech City</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Social Column */}
+          <div>
+            <h4 className="text-white font-bold mb-6 text-lg tracking-wide">Follow Us</h4>
+            <div className="flex items-center gap-4">
+              <a aria-label="Facebook" href="#" className="w-10 h-10 rounded-full bg-[#1E1E24] border border-[#2D2D35] flex items-center justify-center text-gray-400 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:scale-110 transition-all">
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12.06C22 6.49 17.52 2 11.94 2 6.37 2 1.88 6.49 1.88 12.06c0 4.99 3.65 9.13 8.43 10v-7.07H7.9v-2.93h2.41V9.41c0-2.38 1.42-3.7 3.6-3.7 1.04 0 2.13.19 2.13.19v2.34h-1.2c-1.18 0-1.55.73-1.55 1.48v1.78h2.64l-.42 2.93h-2.22V22c4.79-.87 8.44-5.01 8.44-9.94z" /></svg>
               </a>
-              <a aria-label="X / Twitter" href="#" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                  <path d="M3 3h4.6l4.66 6.4L16.7 3H21l-7.2 9.72L21.6 21h-4.6l-5.01-6.89L7.3 21H3l7.6-10.14L3 3z"/>
-                </svg>
+              <a aria-label="Twitter" href="#" className="w-10 h-10 rounded-full bg-[#1E1E24] border border-[#2D2D35] flex items-center justify-center text-gray-400 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:scale-110 transition-all">
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
               </a>
-              <a aria-label="LinkedIn" href="#" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                  <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.98 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.72-2.6 5.05 0 5.98 3.32 5.98 7.64V24h-5v-6.69c0-1.6-.03-3.66-2.23-3.66-2.23 0-2.57 1.74-2.57 3.54V24h-4.75V8.98z"/>
-                </svg>
-              </a>
-              <a aria-label="Instagram" href="#" className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                  <path d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.054 1.97.24 2.43.4.61.21 1.04.46 1.49.91.45.45.7.88.91 1.49.16.46.35 1.26.4 2.43.06 1.27.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.24 1.97-.4 2.43-.21.61-.46 1.04-.91 1.49-.45.45-.88.7-1.49.91-.46.16-1.26.35-2.43.4-1.27.06-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.97-.24-2.43-.4a4.04 4.04 0 0 1-1.49-.91 4.04 4.04 0 0 1-.91-1.49c-.16-.46-.35-1.26-.4-2.43C2.17 15.58 2.16 15.2 2.16 12s.012-3.584.07-4.85c.054-1.17.24-1.97.4-2.43.21-.61.46-1.04.91-1.49.45-.45.88-.7 1.49-.91.46-.16 1.26-.35 2.43-.4C8.42 2.17 8.8 2.16 12 2.16Zm0 1.68c-3.15 0-3.52.012-4.76.07-.98.045-1.51.21-1.86.35-.47.18-.8.39-1.15.74-.35.35-.56.68-.74 1.15-.14.35-.31.88-.35 1.86-.06 1.24-.07 1.61-.07 4.76s.012 3.52.07 4.76c.045.98.21 1.51.35 1.86.18.47.39.8.74 1.15.35.35.68.56 1.15.74.35.14.88.31 1.86.35 1.24.06 1.61.07 4.76.07s3.52-.012 4.76-.07c.98-.045 1.51-.21 1.86-.35.47-.18.8-.39 1.15-.74.35-.35.56-.68.74-1.15.14-.35.31-.88.35-1.86.06-1.24.07-1.61.07-4.76s-.012-3.52-.07-4.76c-.045-.98-.21-1.51-.35-1.86a2.36 2.36 0 0 0-.74-1.15 2.36 2.36 0 0 0-1.15-.74c-.35-.14-.88-.31-1.86-.35-1.24-.06-1.61-.07-4.76-.07Zm0 3.27a6.57 6.57 0 1 1 0 13.14 6.57 6.57 0 0 1 0-13.14Zm0 1.68a4.89 4.89 0 1 0 0 9.78 4.89 4.89 0 0 0 0-9.78Zm6.92-2.03a1.54 1.54 0 1 1 0 3.08 1.54 1.54 0 0 1 0-3.08Z"/>
-                </svg>
+              <a aria-label="Instagram" href="#" className="w-10 h-10 rounded-full bg-[#1E1E24] border border-[#2D2D35] flex items-center justify-center text-gray-400 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:scale-110 transition-all">
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.069-4.85.069-3.204 0-3.584-.012-4.849-.069-3.225-.149-4.771-1.664-4.919-4.919-.058-1.265-.069-1.644-.069-4.849 0-3.204.012-3.584.069-4.849.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a3.999 3.999 0 110-7.998 3.999 3.999 0 010 7.998zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
               </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-indigo-800/30 pt-6 flex justify-between items-center gap-2 mb-10">
-         
-          <div className="flex items-center gap-4 text-xs text-gray-400">
-            <a href="#" className="hover:text-white transition-colors">Teams & Conditions</a>
-            <span className="text-indigo-700">|</span>
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+        <div className="mt-12 border-t border-[#2D2D35] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-6 text-xs text-gray-500 font-medium">
+            <a href="#" className="hover:text-white transition-colors">Terms</a>
+            <a href="#" className="hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="hover:text-white transition-colors">Cookies</a>
           </div>
-          <p className="text-xs text-gray-500">Copyright © {new Date().getFullYear()} Motivec Demo3. All Rights Reserved.</p>
+          <p className="text-xs text-gray-500">© {new Date().getFullYear()} EventHub. All Rights Reserved.</p>
         </div>
       </div>
-
-      <a href="#top" className="hidden md:flex items-center justify-center h-10 w-10 rounded-full bg-gradient-to-r from-pink-500 to-indigo-600 text-white shadow-md hover:shadow-lg hover:scale-105 transition absolute right-5 bottom-5">↑</a>
     </footer>
   )
 }
+
+export default Footer;

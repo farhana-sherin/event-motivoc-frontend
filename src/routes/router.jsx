@@ -27,7 +27,8 @@ import CreateEvent from "../component/createEvent";
 import UpdateEvent from "../component/UpdateEvent";
 import OrganizerNotifications from "../component/OrganizerNotification";
 import CustomerNotifications from "../component/CustomerNotification";
-import CreateSupportTicket from "../component/CreateSupportTicket";
+// import CreateSupportTicket from "../component/CreateSupportTicket"; // Remove or comment out
+import TicketSupport from "../component/TicketSupport";
 import EventReviewPage from "../component/EventReviewpage";
 import OrganizerEventRatings from "../component/OrganizerRating";
 import Register from "../pages/RegisterForm";
@@ -36,12 +37,12 @@ import WishlistPage from "../component/WhishlistFull";
 import UserAuth from "./protectedroutes/UserAuth";
 import LearnMorePage from "../component/LearnMpre";
 import RecommendedEvents from "../component/airecommendation";
-
-
+import OrganizerProfile from "../component/OrganizerProfile";
+import { OrganizerLayout } from "../component/OrganizerLayout";
 
 export const router = createBrowserRouter([
   {
-    path: "/",    
+    path: "/",
     element: <UserLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -52,7 +53,6 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />
-
       },
       {
         path: "/",
@@ -62,7 +62,6 @@ export const router = createBrowserRouter([
         path: "payment/success",
         element: <PaymentSuccess />
       },
-      
 
       {
         path: "auth",
@@ -81,108 +80,115 @@ export const router = createBrowserRouter([
             element: <BookingPage />
           },
           {
-            path: "booking/:bookingId", 
+            path: "booking/:bookingId",
             element: <BookingDetailsPage />
           },
-          
+
           {
-            path:"event/detail/:id",
-            element:<EventDetail/>
+            path: "event/detail/:id",
+            element: <EventDetail />
           },
           {
-            path:"recommendations",
-            element:<RecommendedEvents/>
+            path: "recommendations",
+            element: <RecommendedEvents />
           },
           {
             path: "search/:category",
-            element: <SearchEventsPage/>
+            element: <SearchEventsPage />
           },
           {
             path: "become-organizer",
             element: <BecomeOrganizerPage />
           },
           {
-            path:"dashboard",
-            element:<OrganizerDashboard/>
-          },
-          {
-            path:"OrganizerEventList",
-            element:<OrganizerEventList />
-          },
-          {
-            path:"organizer/events",
-            element:<OrganizerEvents />
-          },
-          {
-            path: "OrganizerEventDetail/:id",
-            element: <OrganizerEventDetails />
-          },
-          {
-            path: "Organizerbooking/details/:id",
-            element: <OrganizerBooked />
-          },
-          {
-            path: "event/create",
-            element: <CreateEvent/>
-          },
-          {
-            path: "event/update/:id",
-            element: <UpdateEvent />
-          },
-          {
-            path:"cancelled/booking",
-            element:<CancelledBookings />
-          },
-          {
-            path:"organizer/bookings",
-            element:<AllBookings />
-          },
-          {
-            path:"organizer/analytics",
-            element:<OrganizerAnalytics />
-          },
-          {
-            path:"admin/approved/events",
-            element:<AdminApprovedEvents/>
-          },
-          {
-            path:"organizer/notification",
-            element:<OrganizerNotifications />
+            element: <OrganizerLayout />,
+            children: [
+              {
+                path: "dashboard",
+                element: <OrganizerDashboard />
+              },
+              {
+                path: "OrganizerEventList",
+                element: <OrganizerEventList />
+              },
+              {
+                path: "organizer/events",
+                element: <OrganizerEvents />
+              },
+              {
+                path: "OrganizerEventDetail/:id",
+                element: <OrganizerEventDetails />
+              },
+              {
+                path: "Organizerbooking/details/:id",
+                element: <OrganizerBooked />
+              },
+              {
+                path: "event/create",
+                element: <CreateEvent />
+              },
+              {
+                path: "event/update/:id",
+                element: <UpdateEvent />
+              },
+              {
+                path: "cancelled/booking",
+                element: <CancelledBookings />
+              },
+              {
+                path: "organizer/bookings",
+                element: <AllBookings />
+              },
+              {
+                path: "organizer/analytics",
+                element: <OrganizerAnalytics />
+              },
+              {
+                path: "admin/approved/events",
+                element: <AdminApprovedEvents />
+              },
+              {
+                path: "organizer/notification",
+                element: <OrganizerNotifications />
+              },
+              {
+                path: "organizer/rating",
+                element: <OrganizerEventRatings />
+              },
+              {
+                path: "organizer/profile",
+                element: <OrganizerProfile />
+              }
+            ]
           },
           {
             path: "my/notification",
             element: <CustomerNotifications />
           },
           {
-            path: "support-ticket/create",
-            element: <CreateSupportTicket />
+            path: "support",
+            element: <TicketSupport />
           },
           {
             path: "event/:id/reviews",
             element: <EventReviewPage />
           },
-          {
-            path: "organizer/rating",
-            element: <OrganizerEventRatings />
-          },
+
           {
             path: "profile/:id",
-            element: <ProfilePage/>
+            element: <ProfilePage />
           },
+
           {
             path: "wishlist",
             element: <WishlistPage />
           },
           {
             path: "learn/more",
-            element: <LearnMorePage/>
+            element: <LearnMorePage />
           }
         ]
       }
-      
-      
-      
-      
     ]
   }
 ]);

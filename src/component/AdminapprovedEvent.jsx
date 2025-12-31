@@ -54,27 +54,27 @@ const AdminApprovedEvents = () => {
       <table className={`min-w-full divide-y divide-gray-200 border rounded-lg ${typeStyles[type]}`}>
         <thead className="bg-gray-100">
           <tr>
-            <th className="px-4 py-2 text-left">Title</th>
-            <th className="px-4 py-2 text-left">Start Date</th>
-            <th className="px-4 py-2 text-left">End Date</th>
-            <th className="px-4 py-2 text-left">Status</th>
-            <th className="px-4 py-2 text-left">Admin Approved</th>
+            <th className="px-4 py-2 text-left text-gray-700 font-semibold">Title</th>
+            <th className="px-4 py-2 text-left text-gray-700 font-semibold">Start Date</th>
+            <th className="px-4 py-2 text-left text-gray-700 font-semibold">End Date</th>
+            <th className="px-4 py-2 text-left text-gray-700 font-semibold">Status</th>
+            <th className="px-4 py-2 text-left text-gray-700 font-semibold">Admin Approved</th>
           </tr>
         </thead>
         <tbody>
           {eventList.length > 0 ? (
             eventList.map((e) => (
               <tr key={e.id} className="hover:bg-gray-100">
-                <td className="px-4 py-2">{e.title}</td>
-                <td className="px-4 py-2">{e.start_date}</td>
-                <td className="px-4 py-2">{e.end_date}</td>
-                <td className="px-4 py-2 capitalize">{e.status.toLowerCase()}</td>
-                <td className="px-4 py-2">{e.status === "APPROVED" ? "Yes" : "No"}</td>
+                <td className="px-4 py-2 text-gray-800">{e.title}</td>
+                <td className="px-4 py-2 text-gray-700">{e.start_date}</td>
+                <td className="px-4 py-2 text-gray-700">{e.end_date}</td>
+                <td className="px-4 py-2 capitalize text-gray-800">{e.status.toLowerCase()}</td>
+                <td className="px-4 py-2 text-gray-800">{e.status === "APPROVED" ? "Yes" : "No"}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="px-4 py-2 text-center text-gray-500">
+              <td colSpan={5} className="px-4 py-2 text-center text-gray-600">
                 No events found.
               </td>
             </tr>
@@ -85,7 +85,7 @@ const AdminApprovedEvents = () => {
   };
 
   return (
-    <OrganizerLayout>
+    <>
       <div className="p-10">
         <h2 className="text-2xl font-bold mb-4 text-gray-700">Events Management</h2>
 
@@ -95,11 +95,10 @@ const AdminApprovedEvents = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-md font-medium ${
-                activeTab === tab
-                  ? "bg-indigo-500 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              className={`px-4 py-2 rounded-md font-medium ${activeTab === tab
+                ? "bg-indigo-500 text-white"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
@@ -109,7 +108,7 @@ const AdminApprovedEvents = () => {
         {/* Active Table */}
         {renderEventTable(events[activeTab], activeTab)}
       </div>
-    </OrganizerLayout>
+    </>
   );
 };
 

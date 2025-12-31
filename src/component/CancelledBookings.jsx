@@ -90,9 +90,9 @@ const CancelledBookings = () => {
   };
 
   return (
-    <OrganizerLayout>
+    <>
       {content()}
-    </OrganizerLayout>
+    </>
   );
 };
 
