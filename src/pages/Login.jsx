@@ -94,15 +94,16 @@ export default function Login() {
         </button>
 
         {/* Register Link */}
-        <p className="text-center text-[#CFCBD3] mt-6">
-          Don't have an account?{" "}
+        {/* Register Link Box */}
+        <div className="mt-8 pt-6 border-t border-[#7B3EFF]/20 text-center">
+          <p className="text-[#CFCBD3] mb-3 text-sm">Don't have an account?</p>
           <Link
             to="/register"
-            className="text-[#A259FF] hover:text-[#C3A6FF] font-semibold transition"
+            className="block w-full py-3 rounded-xl border border-[#7B3EFF]/50 hover:bg-[#7B3EFF]/10 text-[#A259FF] font-bold transition-all duration-300 hover:scale-[1.02]"
           >
             Create Account
           </Link>
-        </p>
+        </div>
       </form>
     </div>
   );
