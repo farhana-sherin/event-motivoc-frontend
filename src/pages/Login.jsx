@@ -86,12 +86,15 @@ export default function Login() {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover"
-        >
-          Sign In
-        </button>
+        {/* Submit Button Box */}
+        <div className="mt-6 pt-6 border-t border-[#7B3EFF]/20">
+          <button
+            type="submit"
+            className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover"
+          >
+            Sign In
+          </button>
+        </div>
 
         {/* Register Link */}
         {/* Register Link Box */}

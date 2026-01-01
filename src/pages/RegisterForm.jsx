@@ -130,12 +130,15 @@ export default function Register() {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover"
-        >
-          Create Account
-        </button>
+        {/* Submit Button Box */}
+        <div className="mt-6 pt-6 border-t border-[#7B3EFF]/20">
+          <button
+            type="submit"
+            className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover"
+          >
+            Create Account
+          </button>
+        </div>
 
         {/* Login Link Box */}
         <div className="mt-8 pt-6 border-t border-[#7B3EFF]/20 text-center">
