@@ -74,7 +74,7 @@ const Header = () => {
               { to: "/auth/event/list", label: "Events" },
               { to: "/auth/view/all/booking", label: "Bookings" },
               { to: "/auth/support", label: "Support" },
-              
+
             ].map((item) => (
               <Link
                 key={item.to}
@@ -110,7 +110,7 @@ const Header = () => {
                     <div
                       key={index}
                       onClick={() => handleSelect(item)}
-                    className="px-4 py-2 text-white/80 hover:bg-[#111827] hover:text-white cursor-pointer transition text-sm"
+                      className="px-4 py-2 text-white/80 hover:bg-[#111827] hover:text-white cursor-pointer transition text-sm"
                     >
                       {item}
                     </div>
@@ -207,6 +207,18 @@ const Header = () => {
               <Link to="/auth/my/notification" onClick={() => setIsOpen(false)} className="px-4 py-3 text-white/80 font-bold rounded-xl transition bg-gradient-to-r from-[#070710] via-[#0c1020] to-[#130c26] border border-[#1f2937] hover:border-[var(--color-primary)]">Notifications</Link>
               <Link to="/auth/profile/1" onClick={() => setIsOpen(false)} className="px-4 py-3 text-white/80 font-bold rounded-xl transition bg-gradient-to-r from-[#070710] via-[#0c1020] to-[#130c26] border border-[#1f2937] hover:border-[var(--color-primary)]">Profile</Link>
               <Link to="/auth/wishlist" onClick={() => setIsOpen(false)} className="px-4 py-3 text-white/80 font-bold rounded-xl transition bg-gradient-to-r from-[#070710] via-[#0c1020] to-[#130c26] border border-[#1f2937] hover:border-[var(--color-primary)]">Wishlist</Link>
+
+              {isAuthenticated && (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
+                  className="w-full text-left px-4 py-3 text-[#f472b6] font-bold rounded-xl transition bg-gradient-to-r from-[#070710] via-[#0c1020] to-[#130c26] border border-[#1f2937] hover:border-[var(--color-primary)] hover:bg-[#2D2D35]"
+                >
+                  Logout
+                </button>
+              )}
 
               {!isAuthenticated && (
                 <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-[#2D2D35]">
