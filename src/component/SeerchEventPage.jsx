@@ -29,7 +29,7 @@ const SearchEventsPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
-        <p className="text-lg font-medium text-gray-300 animate-pulse">
+        <p className="text-lg font-medium text-gray-500 animate-pulse">
           Loading events...
         </p>
       </div>
@@ -37,7 +37,7 @@ const SearchEventsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-16 px-6 text-gray-900">
       <div className="max-w-7xl mx-auto">
         {/* Page Title */}
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
@@ -49,7 +49,7 @@ const SearchEventsPage = () => {
         </h2>
 
         {events.length === 0 ? (
-          <div className="text-center py-20 bg-white/70 backdrop-blur-md rounded-2xl border border-gray-200 shadow-lg">
+          <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 shadow-sm">
             <p className="text-gray-600 text-lg">
               No events found in this category.
             </p>
@@ -64,7 +64,7 @@ const SearchEventsPage = () => {
                 <Link
                   key={event.id}
                   to={`/auth/event/detail/${event.id}`}
-                  className="group relative bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                  className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100"
                 >
                   {/* Event Image */}
                   <div className="relative">
@@ -87,10 +87,10 @@ const SearchEventsPage = () => {
 
                   {/* Event Content */}
                   <div className="p-6 flex flex-col">
-                    <h3 className="text-2xl font-bold text-white mb-3 line-clamp-2 group-hover:text-white transition-colors">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
                       {event.title}
                     </h3>
-                    <p className="text-sm text-gray-400 mb-6">
+                    <p className="text-sm text-gray-500 mb-6">
                       {startDate.toLocaleDateString()} – {endDate.toLocaleDateString()}
                     </p>
 
