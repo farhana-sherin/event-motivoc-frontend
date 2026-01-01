@@ -100,14 +100,14 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed, isMobileMenuOpen
   ];
 
   return (
-    <aside className={`fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 shadow-lg 
+    <aside className={`fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 shadow-lg flex flex-col
       ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       ${isCollapsed ? "lg:w-16" : "lg:w-64"} w-64`}>
 
       {/* Mobile Close Button */}
       <button
         onClick={() => setIsMobileMenuOpen(false)}
-        className="lg:hidden absolute top-4 right-4 p-2 rounded-lg bg-gray-100 text-gray-600"
+        className="lg:hidden absolute top-4 right-4 p-2 rounded-lg bg-gray-100 text-gray-600 z-50"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -115,7 +115,7 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed, isMobileMenuOpen
       </button>
 
       {/* Sidebar Content */}
-      <div className="flex flex-col h-full overflow-y-auto">
+      <div className="flex flex-col flex-1 overflow-y-auto pt-4 sm:pt-0">
         {/* Toggle Button (Desktop Only) */}
         <div className="hidden lg:block p-4 border-b border-gray-200">
           <button
@@ -134,7 +134,7 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed, isMobileMenuOpen
         </div>
 
         {/* Navigation Menu */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-4 space-y-1 sm:space-y-2">
           {menuItems.map((item, index) => {
             const isActive = location.pathname === item.path;
             const isLabelVisible = !isCollapsed || isMobileMenuOpen;
@@ -160,25 +160,25 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed, isMobileMenuOpen
             );
           })}
         </nav>
-
       </div>
 
-      {/* Logout Section */}
-      <div className="p-4 border-t border-gray-200">
+      {/* Logout Section - Fixed at Bottom */}
+      <div className="p-4 border-t border-gray-200 bg-gray-50/50">
         <button
           onClick={() => {
             localStorage.removeItem("token");
+            localStorage.removeItem("role"); // Also clear role
             window.location.href = "/login";
           }}
-          className={`flex items-center space-x-3 px-4 py-3 rounded-xl w-full transition-all duration-300 text-red-500 hover:bg-red-50 hover:text-red-700 group`}
+          className={`flex items-center space-x-3 px-4 py-3 rounded-xl w-full transition-all duration-300 text-red-500 hover:bg-red-50 hover:text-red-700 group border border-transparent hover:border-red-200`}
         >
-          <div className="flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+          <div className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
           </div>
           {(!isCollapsed || isMobileMenuOpen) && (
-            <span className="font-medium">Logout</span>
+            <span className="font-medium tracking-wide">Logout</span>
           )}
         </button>
       </div>
