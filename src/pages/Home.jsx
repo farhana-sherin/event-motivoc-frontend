@@ -82,32 +82,39 @@ export const Home = () => {
                   <div className="absolute inset-0 "></div>
 
                   {/* Content Container */}
-                  <div className="container mx-auto px-6 xl:pl-32 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full">
+                  <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10 flex flex-col justify-center h-full pt-16 sm:pt-24 md:pt-32">
 
-                    {/* Left Content */}
-                    <div className="max-w-4xl animate-fade-in-up">
+                    {/* Centered Content Wrapper */}
+                    <div className="max-w-4xl mx-auto lg:mx-0 text-center lg:text-left animate-fade-in-up">
                       <div className="relative">
-                        {console.log("Banner Item Data:", item)}
                         {/* Event Details - Main Feature */}
-                        <div className="mb-8">
-                          {/* Date & Location */}
-                          <p className=" font-bold font-mono text-sm md:text-base tracking-widest mb-4 uppercase">
-                            [ {formatEventDate(item.start_date)} - {formatEventDate(item.end_date)} ]
-                          </p>
+                        <div className="mb-6 sm:mb-10">
+
+                          {/* Date Pill Badge */}
+                          <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6 sm:mb-8 transition-transform hover:scale-105 duration-300">
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span className="text-[10px] sm:text-xs md:text-sm font-black tracking-[0.2em] uppercase text-white/90">
+                              {formatEventDate(item.start_date)} — {formatEventDate(item.end_date)}
+                            </span>
+                          </div>
 
                           {/* Title & Description */}
-                          <h2 className="text-5xl md:text-6xl font-black text-white mb-6 leading-none drop-shadow-xl">
+                          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white mb-4 sm:mb-6 leading-[1.1] sm:leading-none tracking-tight drop-shadow-2xl">
                             {item.title}
                           </h2>
-                          <p className="text-lg md:text-xl text-gray-200 font-medium max-w-2xl line-clamp-3 mb-8 drop-shadow-md">
+                          <p className="text-sm sm:text-base md:text-xl text-white/70 font-medium max-w-2xl mx-auto lg:mx-0 line-clamp-3 mb-8 sm:mb-10 leading-relaxed">
                             {item.description}
                           </p>
 
                           {/* Buttons */}
-                          <div className="flex flex-wrap gap-4">
-                            <Link to={`/auth/event/detail/${item.event}`} className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white px-10 py-4 rounded-full font-bold text-lg shadow-[0_10px_30px_rgba(124,58,237,0.4)] hover:shadow-[0_15px_40px_rgba(88,28,135,0.45)] hover:scale-105 transition-transform duration-300 uppercase tracking-widest flex items-center gap-2 group">
+                          <div className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6">
+                            <Link to={`/auth/event/detail/${item.event}`} className="inline-flex items-center gap-3 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white px-8 py-3.5 sm:px-10 sm:py-4 rounded-xl sm:rounded-full font-black text-sm sm:text-lg shadow-[0_10px_30px_rgba(124,58,237,0.3)] hover:shadow-[0_15px_40px_rgba(124,58,237,0.5)] hover:scale-105 active:scale-95 transition-all duration-300 uppercase tracking-widest group">
                               Get Ticket
-                              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                              <svg className="w-5 h-5 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                              </svg>
                             </Link>
                           </div>
                         </div>
@@ -160,7 +167,7 @@ export const Home = () => {
         </div>
       </section>
 
-     
+
 
       <div className="bg-gradient-to-b from-[#070710] via-[#0c1020] to-[#130c26]">
         <HowItWorks />
@@ -181,7 +188,7 @@ export const Home = () => {
       <div className="py-16 bg-gradient-to-b from-[#070710] via-[#0c1020] to-[#130c26]">
         <BecomeOrganizerSection />
       </div>
-      
+
     </div>
   );
 };
