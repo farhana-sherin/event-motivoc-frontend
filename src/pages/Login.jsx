@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../config/axiosinstance";
 import { useNavigate, Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../component/AuthHook";
 
 export default function Login() {
@@ -9,6 +9,7 @@ export default function Login() {
 
   const { login, isAuthenticated } = useContext(AuthContext);
   let navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -23,24 +24,29 @@ export default function Login() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setErrorMessage("");
     console.log("Form Data:", data);
     try {
       const response = await axiosInstance.post("customer/login/", data);
 
-      console.log(response.data.data.access);
-      let token = response.data.data.access;
-      let role = response.data.data.role;
-      console.log(role);
+      if (response.data.status_code === 6000) {
+        console.log(response.data.data.access);
+        let token = response.data.data.access;
+        let role = response.data.data.role;
+        console.log(role);
 
-      login(token)
-      if (role === 'organizer') {
-
-        navigate("/auth/dashboard");
+        login(token)
+        if (role === 'organizer') {
+          navigate("/auth/dashboard");
+        } else {
+          navigate("/");
+        }
       } else {
-        navigate("/");
+        setErrorMessage(response.data.message || "Invalid credentials");
       }
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.response?.data?.message || "Something went wrong. Please try again.");
     }
   };
 
@@ -59,6 +65,12 @@ export default function Login() {
           </h2>
           <p className="text-[#CFCBD3] mt-2">Sign in to your account</p>
         </div>
+
+        {errorMessage && (
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/50 text-red-200 text-sm text-center font-bold animate-pulse">
+            {errorMessage}
+          </div>
+        )}
 
         <div className="mb-5">
           <label className="block text-[#CFCBD3] font-semibold mb-2">Email Address</label>
@@ -100,12 +112,13 @@ export default function Login() {
         {/* Register Link Box */}
         <div className="mt-8 pt-6 border-t border-[#7B3EFF]/20 text-center">
           <p className="text-[#CFCBD3] mb-3 text-sm">Don't have an account?</p>
-          <Link
-            to="/register"
+          <button
+            type="button"
+            onClick={() => navigate("/register")}
             className="block w-full py-3 rounded-xl border border-[#7B3EFF]/50 hover:bg-[#7B3EFF]/10 text-[#A259FF] font-bold transition-all duration-300 hover:scale-[1.02]"
           >
             Create Account
-          </Link>
+          </button>
         </div>
       </form>
     </div>

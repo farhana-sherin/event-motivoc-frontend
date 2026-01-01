@@ -1,13 +1,15 @@
+
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../config/axiosinstance";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../component/AuthHook";
 
 export default function Register() {
   let navigate = useNavigate();
 
   const { login, isAuthenticated } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,17 +24,23 @@ export default function Register() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setErrorMessage("");
     console.log("Form Data:", data);
     try {
       const response = await axiosInstance.post("customer/register/", data);
 
-      console.log(response.data.data.access);
-      let token = response.data.data.access;
-      // Use the login function from context to update global state and storage
-      login(token);
-      navigate("/");
+      if (response.data.status_code === 6000) {
+        console.log(response.data.data.access);
+        let token = response.data.data.access;
+        // Use the login function from context to update global state and storage
+        login(token);
+        navigate("/");
+      } else {
+        setErrorMessage(response.data.message || "Registration failed. Please try again.");
+      }
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.response?.data?.message || "Something went wrong. Please try again.");
     }
   };
 
@@ -52,13 +60,19 @@ export default function Register() {
           <p className="text-[#CFCBD3] mt-2">Join our event community today</p>
         </div>
 
+        {errorMessage && (
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/50 text-red-200 text-sm text-center font-bold animate-pulse">
+            {errorMessage}
+          </div>
+        )}
+
         <div className="mb-4">
           <label className="block text-[#CFCBD3] font-semibold mb-2">First Name</label>
           <input
             type="text"
             placeholder="Enter your first name"
             {...register("first_name", { required: "First name is required" })}
-            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.first_name ? "border-red-500" : ""}`}
+            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.first_name ? "border-red-500" : ""} `}
           />
           {errors.first_name && (
             <p className="text-red-400 text-sm mt-1">{errors.first_name.message}</p>
@@ -71,7 +85,7 @@ export default function Register() {
             type="text"
             placeholder="Enter your last name"
             {...register("last_name", { required: "Last name is required" })}
-            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.last_name ? "border-red-500" : ""}`}
+            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.last_name ? "border-red-500" : ""} `}
           />
           {errors.last_name && (
             <p className="text-red-400 text-sm mt-1">{errors.last_name.message}</p>
@@ -84,7 +98,7 @@ export default function Register() {
             type="text"
             placeholder="Choose a username"
             {...register("username", { required: "Username is required" })}
-            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.username ? "border-red-500" : ""}`}
+            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.username ? "border-red-500" : ""} `}
           />
           {errors.username && (
             <p className="text-red-400 text-sm mt-1">{errors.username.message}</p>
@@ -97,7 +111,7 @@ export default function Register() {
             type="email"
             placeholder="Enter your email"
             {...register("email", { required: "Email is required" })}
-            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.email ? "border-red-500" : ""}`}
+            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.email ? "border-red-500" : ""} `}
           />
           {errors.email && (
             <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
@@ -110,7 +124,7 @@ export default function Register() {
             type="text"
             placeholder="Enter your phone number"
             {...register("phone", { required: "Phone is required" })}
-            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.phone ? "border-red-500" : ""}`}
+            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.phone ? "border-red-500" : ""} `}
           />
           {errors.phone && (
             <p className="text-red-400 text-sm mt-1">{errors.phone.message}</p>
@@ -123,7 +137,7 @@ export default function Register() {
             type="password"
             placeholder="Create a password"
             {...register("password", { required: "Password is required" })}
-            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.password ? "border-red-500" : ""}`}
+            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.password ? "border-red-500" : ""} `}
           />
           {errors.password && (
             <p className="text-red-400 text-sm mt-1">{errors.password.message}</p>
@@ -131,10 +145,10 @@ export default function Register() {
         </div>
 
         {/* Submit Button Box */}
-        <div className="mt-6 pt-6 border-t border-[#7B3EFF]/20">
+        <div className="mt-6 pt-6 border-t border-[#7B3EFF]/20 ">
           <button
             type="submit"
-            className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover"
+            className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover "
           >
             Create Account
           </button>
