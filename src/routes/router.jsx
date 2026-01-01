@@ -8,7 +8,7 @@ import BookingPage from "../pages/BookingPage";
 import BookingDetailsPage from "../pages/BookingDetail";
 import PaymentSuccess from "../component/PaymentSuccess";
 import EventDetail from "../pages/EventDetail";
-import SearchEventsPage from "../component/SeerchEventPage";
+import SearchEventsPage from "../component/SearchEventPage";
 import EventListPage from "../pages/EventListPage";
 import ViewAllBooking from "../pages/ViewAllBooking";
 
