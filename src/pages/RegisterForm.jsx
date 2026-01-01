@@ -1,10 +1,20 @@
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../config/axiosinstance";
 import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../component/AuthHook";
 
 export default function Register() {
   let navigate = useNavigate();
-  
+
+  const { login, isAuthenticated } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+
   const {
     register,
     handleSubmit,
@@ -18,8 +28,9 @@ export default function Register() {
 
       console.log(response.data.data.access);
       let token = response.data.data.access;
-      localStorage.setItem("token", token);
-      navigate("/"); // redirect after successful registration
+      // Use the login function from context to update global state and storage
+      login(token);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -125,10 +136,10 @@ export default function Register() {
         >
           Create Account
         </button>
-        
+
         <p className="text-center text-[#CFCBD3] mt-6">
           Already have an account?{" "}
-          <button 
+          <button
             onClick={() => navigate('/login')}
             className="text-[#A259FF] hover:text-[#C3A6FF] font-semibold transition"
           >

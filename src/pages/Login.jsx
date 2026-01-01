@@ -1,15 +1,21 @@
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../config/axiosinstance";
 import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../component/AuthHook";
 
 export default function Login() {
 
 
-  const {login} = useContext(AuthContext)
-
+  const { login, isAuthenticated } = useContext(AuthContext);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+
   const {
     register,
     handleSubmit,
@@ -25,7 +31,7 @@ export default function Login() {
       let token = response.data.data.access;
       let role = response.data.data.role;
       console.log(role);
-      
+
       login(token)
       if (role === 'organizer') {
 
