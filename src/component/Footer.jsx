@@ -13,10 +13,10 @@ export const Footer = () => {
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-2 group">
               <div className="h-10 w-10 rounded-lg bg-[var(--color-primary)] flex items-center justify-center text-white font-black text-xl shadow-[0_0_15px_rgba(255,0,85,0.5)]">
-                E
+                  M
               </div>
               <h1 className="text-2xl font-black text-white tracking-tighter">
-                Event<span className="text-[var(--color-primary)]">Hub</span>
+                Moti<span className="text-[var(--color-primary)]">vok</span>
               </h1>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">

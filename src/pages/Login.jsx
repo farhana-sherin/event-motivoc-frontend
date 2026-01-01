@@ -46,10 +46,10 @@ export default function Login() {
       >
         <div className="text-center mb-8">
           <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-[#7B3EFF] to-[#A259FF] flex items-center justify-center mb-4 shadow-lg cyber-glow">
-            <span className="text-[#FFFFFF] font-bold text-2xl">E</span>
+            <span className="text-[#FFFFFF] font-bold text-2xl">M</span>
           </div>
           <h2 className="text-3xl font-bold text-white">
-            Welcome to <span className="cyber-accent">EventAI</span>
+            Welcome to <span className="cyber-accent">Motivok</span>
           </h2>
           <p className="text-[#CFCBD3] mt-2">Sign in to your account</p>
         </div>

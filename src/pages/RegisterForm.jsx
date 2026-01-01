@@ -26,14 +26,14 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center cyber-bg px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center cyber-bg px-4 py-24">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md cyber-glass rounded-2xl p-8 animate-fade-in-up border border-[#7B3EFF]/30"
       >
         <div className="text-center mb-8">
           <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-[#7B3EFF] to-[#A259FF] flex items-center justify-center mb-4 shadow-lg cyber-glow">
-            <span className="text-[#FFFFFF] font-bold text-2xl">E</span>
+            <span className="text-[#FFFFFF] font-bold text-2xl">M</span>
           </div>
           <h2 className="text-3xl font-bold text-white">
             Create <span className="cyber-accent">Account</span>
