@@ -39,25 +39,28 @@ const OrganizerNotifications = () => {
           <p className="text-gray-500">No notifications found.</p>
         </div>
       ) : (
-        <div className="max-w-4xl mx-auto py-10 px-4">
-          <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">
+        <div className="max-w-4xl mx-auto py-6 sm:py-10 px-4">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-gray-900">
             Your Notifications
           </h2>
           <div className="space-y-4">
             {notifications.map((notif) => (
               <div
                 key={notif.id}
-                className={`p-4 rounded-lg shadow ${notif.is_read ? "bg-gray-100" : "bg-blue-50"
+                className={`p-4 rounded-xl shadow-sm border transition-all duration-300 ${notif.is_read ? "bg-gray-50 border-gray-100" : "bg-blue-50 border-blue-100 shadow-blue-100/50"
                   }`}
               >
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="font-semibold text-gray-900">{notif.title}</h3>
-                  <span className="text-xs text-gray-500">
-                    {new Date(notif.created_at).toLocaleString()}
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-4 mb-2">
+                  <h3 className="font-bold text-gray-900 leading-tight">{notif.title}</h3>
+                  <span className="text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {new Date(notif.created_at).toLocaleDateString()} {new Date(notif.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
-                <p className="text-gray-700 mb-2">{notif.message}</p>
-                <p className="text-xs text-gray-500">From: Admin</p>
+                <p className="text-sm sm:text-base text-gray-700 mb-2 leading-relaxed">{notif.message}</p>
+                <div className="flex items-center gap-1.5 opacity-60">
+                  <div className="w-1.5 h-1.5 rounded-full bg-gray-400"></div>
+                  <p className="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-tighter">Admin Notification</p>
+                </div>
               </div>
             ))}
           </div>

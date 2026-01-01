@@ -33,7 +33,7 @@ export default function Register() {
         console.log(response.data.data.access);
         let token = response.data.data.access;
         // Use the login function from context to update global state and storage
-        login(token);
+        login(token, "customer");
         navigate("/");
       } else {
         setErrorMessage(response.data.message || "Registration failed. Please try again.");
@@ -72,7 +72,7 @@ export default function Register() {
             type="text"
             placeholder="Enter your first name"
             {...register("first_name", { required: "First name is required" })}
-            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.first_name ? "border-red-500" : ""} `}
+            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.first_name ? "border-red-500" : ""}`}
           />
           {errors.first_name && (
             <p className="text-red-400 text-sm mt-1">{errors.first_name.message}</p>
@@ -85,7 +85,7 @@ export default function Register() {
             type="text"
             placeholder="Enter your last name"
             {...register("last_name", { required: "Last name is required" })}
-            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.last_name ? "border-red-500" : ""} `}
+            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.last_name ? "border-red-500" : ""}`}
           />
           {errors.last_name && (
             <p className="text-red-400 text-sm mt-1">{errors.last_name.message}</p>
@@ -98,7 +98,7 @@ export default function Register() {
             type="text"
             placeholder="Choose a username"
             {...register("username", { required: "Username is required" })}
-            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.username ? "border-red-500" : ""} `}
+            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.username ? "border-red-500" : ""}`}
           />
           {errors.username && (
             <p className="text-red-400 text-sm mt-1">{errors.username.message}</p>
@@ -111,7 +111,7 @@ export default function Register() {
             type="email"
             placeholder="Enter your email"
             {...register("email", { required: "Email is required" })}
-            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.email ? "border-red-500" : ""} `}
+            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.email ? "border-red-500" : ""}`}
           />
           {errors.email && (
             <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
@@ -124,7 +124,7 @@ export default function Register() {
             type="text"
             placeholder="Enter your phone number"
             {...register("phone", { required: "Phone is required" })}
-            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.phone ? "border-red-500" : ""} `}
+            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.phone ? "border-red-500" : ""}`}
           />
           {errors.phone && (
             <p className="text-red-400 text-sm mt-1">{errors.phone.message}</p>
@@ -137,7 +137,7 @@ export default function Register() {
             type="password"
             placeholder="Create a password"
             {...register("password", { required: "Password is required" })}
-            className={`w - full bg - [#100024] / 50 border border - [#7B3EFF] / 30 rounded - xl px - 4 py - 3 text - [#CFCBD3] focus: outline - none focus: ring - 2 focus: ring - [#A259FF] / 50 focus: border - [#A259FF] transition ${errors.password ? "border-red-500" : ""} `}
+            className={`w-full bg-[#100024]/50 border border-[#7B3EFF]/30 rounded-xl px-4 py-3 text-[#CFCBD3] focus:outline-none focus:ring-2 focus:ring-[#A259FF]/50 focus:border-[#A259FF] transition ${errors.password ? "border-red-500" : ""}`}
           />
           {errors.password && (
             <p className="text-red-400 text-sm mt-1">{errors.password.message}</p>
@@ -148,7 +148,7 @@ export default function Register() {
         <div className="mt-6 pt-6 border-t border-[#7B3EFF]/20 ">
           <button
             type="submit"
-            className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover "
+            className="w-full py-3 rounded-xl font-bold text-white border-2 border-[#7B3EFF] bg-[#7B3EFF]/20 hover:bg-[#7B3EFF] hover:shadow-[0_0_20px_rgba(123,62,255,0.5)] transition-all duration-300 transform hover:scale-[1.02]"
           >
             Create Account
           </button>

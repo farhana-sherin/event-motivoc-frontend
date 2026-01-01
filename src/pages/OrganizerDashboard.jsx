@@ -52,11 +52,11 @@ export const OrganizerDashboard = () => {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard Overview</h1>
-        <p className="text-gray-600">Welcome back! Here's what's happening with your events.</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Dashboard Overview</h1>
+        <p className="text-sm sm:text-base text-gray-600">Welcome back! Here's what's happening with your events.</p>
       </div>
 
       {/* Status Cards */}

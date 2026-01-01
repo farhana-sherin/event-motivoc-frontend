@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
+export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed, isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const location = useLocation();
 
   const menuItems = [
@@ -51,7 +51,6 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
         </svg>
       )
     },
-
     {
       title: "Analytics",
       path: "/auth/organizer/analytics",
@@ -101,11 +100,24 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
   ];
 
   return (
-    <aside className={`fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 shadow-lg ${isCollapsed ? "w-16" : "w-64"}`}>
+    <aside className={`fixed left-0 top-16 bottom-0 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 shadow-lg 
+      ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+      ${isCollapsed ? "lg:w-16" : "lg:w-64"} w-64`}>
+
+      {/* Mobile Close Button */}
+      <button
+        onClick={() => setIsMobileMenuOpen(false)}
+        className="lg:hidden absolute top-4 right-4 p-2 rounded-lg bg-gray-100 text-gray-600"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
       {/* Sidebar Content */}
       <div className="flex flex-col h-full overflow-y-auto">
-        {/* Toggle Button */}
-        <div className="p-4 border-b border-gray-200">
+        {/* Toggle Button (Desktop Only) */}
+        <div className="hidden lg:block p-4 border-b border-gray-200">
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="w-full flex items-center justify-center p-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-300 group"
@@ -125,19 +137,21 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
         <nav className="flex-1 p-4 space-y-2">
           {menuItems.map((item, index) => {
             const isActive = location.pathname === item.path;
+            const isLabelVisible = !isCollapsed || isMobileMenuOpen;
             return (
               <Link
                 key={index}
                 to={item.path}
+                onClick={() => setIsMobileMenuOpen(false)} // Close drawer on click
                 className={`group flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${isActive
-                    ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 border border-blue-200 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 border border-blue-200 shadow-sm"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
               >
                 <div className={`flex-shrink-0 transition-transform duration-300 ${isActive ? "scale-110 text-blue-600" : "group-hover:scale-105 text-gray-500 group-hover:text-gray-700"}`}>
                   {item.icon}
                 </div>
-                {!isCollapsed && (
+                {isLabelVisible && (
                   <span className={`font-medium transition-opacity duration-300 ${isActive ? "text-blue-600" : "group-hover:text-gray-900"}`}>
                     {item.title}
                   </span>
@@ -163,7 +177,7 @@ export const OrganizerSidebar = ({ isCollapsed, setIsCollapsed }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>
           </div>
-          {!isCollapsed && (
+          {(!isCollapsed || isMobileMenuOpen) && (
             <span className="font-medium">Logout</span>
           )}
         </button>

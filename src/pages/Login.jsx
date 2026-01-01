@@ -7,15 +7,19 @@ import { AuthContext } from "../component/AuthHook";
 export default function Login() {
 
 
-  const { login, isAuthenticated } = useContext(AuthContext);
+  const { login, isAuthenticated, role: userRole } = useContext(AuthContext); // Destructure role
   let navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      if (userRole === "organizer") {
+        navigate("/auth/dashboard");
+      } else {
+        navigate("/");
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, userRole]);
 
   const {
     register,
@@ -35,18 +39,19 @@ export default function Login() {
         let role = response.data.data.role;
         console.log(role);
 
-        login(token)
+        login(token, role) // Pass role to context
         if (role === 'organizer') {
           navigate("/auth/dashboard");
         } else {
           navigate("/");
         }
       } else {
-        setErrorMessage(response.data.message || "Invalid credentials");
+        // Force the generic message as requested, ignoring backend specific text like "Invalid credentials"
+        setErrorMessage("Invalid Email or Password");
       }
     } catch (error) {
       console.log(error);
-      setErrorMessage(error.response?.data?.message || "Something went wrong. Please try again.");
+      setErrorMessage("Invalid Email or Password");
     }
   };
 
@@ -102,7 +107,7 @@ export default function Login() {
         <div className="mt-6 pt-6 border-t border-[#7B3EFF]/20">
           <button
             type="submit"
-            className="w-full cyber-button py-3 rounded-xl font-bold hover:shadow-xl transition cyber-glow-hover"
+            className="w-full py-3 rounded-xl font-bold text-white border-2 border-[#7B3EFF] bg-[#7B3EFF]/20 hover:bg-[#7B3EFF] hover:shadow-[0_0_20px_rgba(123,62,255,0.5)] transition-all duration-300 transform hover:scale-[1.02]"
           >
             Sign In
           </button>

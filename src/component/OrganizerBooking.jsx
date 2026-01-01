@@ -43,8 +43,8 @@ const OrganizerBooking = () => {
   const currentBookings = bookings.slice(startIndex, startIndex + bookingsPerPage);
 
   return (
-    <div className="w-[95%] max-w-7xl mx-auto py-10">
-      <h2 className="text-3xl font-bold mb-6 text-gray-700">Bookings</h2>
+    <div className="w-full max-w-7xl mx-auto py-4 sm:py-10">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-700">Bookings</h2>
 
       {/* Bookings Table */}
       <div className="overflow-x-auto border rounded-lg bg-white shadow">
@@ -73,13 +73,12 @@ const OrganizerBooking = () => {
                 </td>
                 <td className="px-4 py-2">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      b.payment_status === "SUCCESS"
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${b.payment_status === "SUCCESS"
                         ? "bg-green-100 text-green-700"
                         : b.payment_status === "REFUNDED"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-red-100 text-red-700"
-                    }`}
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-red-100 text-red-700"
+                      }`}
                   >
                     {b.payment_status}
                   </span>
@@ -113,11 +112,10 @@ const OrganizerBooking = () => {
           <button
             key={idx}
             onClick={() => setCurrentPage(idx + 1)}
-            className={`px-3 py-1 rounded ${
-              currentPage === idx + 1
+            className={`px-3 py-1 rounded ${currentPage === idx + 1
                 ? "bg-indigo-400 text-white"
                 : "bg-gray-200 hover:bg-gray-300"
-            }`}
+              }`}
           >
             {idx + 1}
           </button>
@@ -149,8 +147,8 @@ const OrganizerBooking = () => {
                     selectedBooking.payment_status === "SUCCESS"
                       ? "text-green-600 font-semibold"
                       : selectedBooking.payment_status === "REFUNDED"
-                      ? "text-yellow-600 font-semibold"
-                      : "text-red-600 font-semibold"
+                        ? "text-yellow-600 font-semibold"
+                        : "text-red-600 font-semibold"
                   }
                 >
                   {selectedBooking.payment_status}

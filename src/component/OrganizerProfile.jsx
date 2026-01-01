@@ -111,7 +111,7 @@ const OrganizerProfile = () => {
     );
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-[#F8F9FA] py-6 sm:py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-5xl mx-auto">
 
         {/* Header Breadcrumb or Title */}
