@@ -91,12 +91,12 @@ export const Home = () => {
                         {/* Event Details - Main Feature */}
                         <div className="mb-8">
                           {/* Date & Location */}
-                          <p className="text-[var(--color-secondary)] font-bold font-mono text-sm md:text-base tracking-widest mb-4 uppercase">
+                          <p className=" font-bold font-mono text-sm md:text-base tracking-widest mb-4 uppercase">
                             [ {formatEventDate(item.start_date)} - {formatEventDate(item.end_date)} ]
                           </p>
 
                           {/* Title & Description */}
-                          <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-none drop-shadow-xl">
+                          <h2 className="text-5xl md:text-6xl font-black text-white mb-6 leading-none drop-shadow-xl">
                             {item.title}
                           </h2>
                           <p className="text-lg md:text-xl text-gray-200 font-medium max-w-2xl line-clamp-3 mb-8 drop-shadow-md">
@@ -160,22 +160,7 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Floating Social Sidebar (Genesis Style) */}
-      <div className="hidden xl:flex fixed left-8 top-1/2 -translate-y-1/2 flex-col gap-6 z-40">
-        {[
-          { label: "FB", href: "#" },
-          { label: "TW", href: "#" },
-          { label: "IG", href: "#" },
-        ].map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className="w-10 h-10 rounded-full border border-[var(--color-primary)]/50 flex items-center justify-center text-[var(--color-text-secondary)] hover:text-white hover:bg-gradient-to-br hover:from-[var(--color-primary)]/30 hover:to-[var(--color-accent)]/30 transition-all shadow-[0_0_20px_rgba(124,58,237,0.25)]"
-          >
-            {item.label}
-          </a>
-        ))}
-      </div>
+     
 
       <div className="bg-gradient-to-b from-[#070710] via-[#0c1020] to-[#130c26]">
         <HowItWorks />
