@@ -29,7 +29,7 @@ const SearchEventsPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
-        <p className="text-lg font-medium text-gray-500 animate-pulse">
+        <p className="text-lg font-medium text-gray-300 animate-pulse">
           Loading events...
         </p>
       </div>
@@ -87,10 +87,10 @@ const SearchEventsPage = () => {
 
                   {/* Event Content */}
                   <div className="p-6 flex flex-col">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-black  transition-colors">
+                    <h3 className="text-2xl font-bold text-white mb-3 line-clamp-2 group-hover:text-white transition-colors">
                       {event.title}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-6">
+                    <p className="text-sm text-gray-400 mb-6">
                       {startDate.toLocaleDateString()} – {endDate.toLocaleDateString()}
                     </p>
 
