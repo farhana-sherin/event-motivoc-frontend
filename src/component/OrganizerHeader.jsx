@@ -19,44 +19,33 @@ export const OrganizerHeader = ({ setIsMobileMenuOpen, isMobileMenuOpen }) => {
 
   return (
     <header className={`sticky top-0 z-50 transition-all duration-500 ease-out ${isScrolled
-        ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50"
-        : "bg-white/95 backdrop-blur-xl"
+      ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50"
+      : "bg-white/95 backdrop-blur-xl"
       }`}>
       <div className="w-full max-w-8xl mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Mobile Menu Toggle */}
-          <div className="flex items-center space-x-4">
-            {/* Mobile Hamburger Menu */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-
-            <div className="flex items-center space-x-4 group cursor-pointer" onClick={() => navigate("/auth/dashboard")}>
-              <div className="relative">
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white font-bold text-lg">M</span>
-                </div>
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+          {/* Logo Section */}
+          <div className="flex items-center space-x-4 group cursor-pointer" onClick={() => navigate("/auth/dashboard")}>
+            <div className="relative">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <span className="text-white font-bold text-lg">M</span>
               </div>
-              <div className="hidden xs:block">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-none">
-                  Motivoc
-                </h1>
-                <p className="text-blue-600 text-[10px] font-bold uppercase tracking-wider mt-1">
-                  Organizer
-                </p>
-              </div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+            </div>
+            <div className="hidden xs:block">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-none">
+                Motivoc
+              </h1>
+              <p className="text-blue-600 text-[10px] font-bold uppercase tracking-wider mt-1">
+                Organizer
+              </p>
             </div>
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            {/* Action Buttons - Hidden on Mobile */}
+            <div className="hidden sm:flex items-center space-x-3">
               <button
                 onClick={() => navigate("/auth/organizer/profile")}
                 className="relative group px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-xl shadow hover:shadow-md transition-all duration-300 hover:scale-105"
@@ -81,6 +70,16 @@ export const OrganizerHeader = ({ setIsMobileMenuOpen, isMobileMenuOpen }) => {
                 </div>
               </button>
             </div>
+
+            {/* Mobile Hamburger Menu - Now on the Right */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2.5 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-90 transition-all"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
